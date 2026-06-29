@@ -1,3 +1,11 @@
 .DS_Store
 node_modules/
 *.log
+
+# Impeccable design tooling (installed locally via `npx impeccable install`).
+# Kept out of the repo to avoid bloat; DESIGN.md + PRODUCT.md hold the portable design context.
+.claude/
+.agents/
+.cursor/
+.gemini/
+.codex/

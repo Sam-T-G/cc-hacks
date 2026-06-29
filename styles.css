@@ -10,7 +10,7 @@
   --card: #FFFFFF;
   --ink: #17161D;
   --ink-soft: #3A3942;
-  --muted: #74727E;
+  --muted: #6A6873;
   --line: rgba(23, 22, 29, 0.12);
   --line-soft: rgba(23, 22, 29, 0.07);
 
@@ -23,6 +23,7 @@
   --pad: clamp(1.25rem, 4vw, 4rem);
   --sec-y: clamp(5rem, 10vw, 9rem);
   --radius: 18px;
+  --ease: cubic-bezier(.2, .7, .3, 1);
 
   --f-display: "Bricolage Grotesque", system-ui, sans-serif;
   --f-body: "Hanken Grotesk", system-ui, sans-serif;
@@ -60,6 +61,13 @@ a { color: inherit; }
   border-radius: 4px;
 }
 
+/* ---------- Polish ---------- */
+::selection { background: color-mix(in srgb, var(--amber) 38%, transparent); color: var(--ink); }
+section[id], .hero { scroll-margin-top: 88px; }
+.hero-title, .section-title, .big-statement, .mt-title, .fmt-name, .tcard-name, .hack-subhead, .anchor-who { text-wrap: balance; }
+.hero-sub, .section-lede, .hack-lead, .mt-body, .matrix-intro, .rstrat-v, .tcard-desc, .why-body p { text-wrap: pretty; }
+.hero-title, .section-title, .big-statement, .rs-num, .pod-place, .anchor-amount, .tier-count-num, .fmt-name { font-optical-sizing: auto; }
+
 /* ---------- Brand mark ---------- */
 .brand { display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; }
 .brand-word { font-family: var(--f-mono); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
@@ -85,6 +93,9 @@ a { color: inherit; }
   letter-spacing: .01em; transition: color .2s ease;
 }
 .nav-links a:hover { color: var(--ink); }
+.nav-links a:not(.nav-cta) { position: relative; }
+.nav-links a:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: currentColor; border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
+.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
 .nav-cta {
   background: var(--ink); color: var(--paper) !important; padding: .5rem .85rem; border-radius: 999px;
 }
