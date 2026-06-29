@@ -346,7 +346,7 @@ a { color: inherit; }
   max-width: none; background: var(--paper-2);
   padding-left: 0; padding-right: 0; padding-bottom: var(--sec-y);
 }
-.hack101 > * { max-width: var(--maxw); margin-left: auto; margin-right: auto; padding-left: var(--pad); padding-right: var(--pad); }
+.band-inner { max-width: var(--maxw); margin-left: auto; margin-right: auto; padding-left: var(--pad); padding-right: var(--pad); }
 .hack-lead {
   font-family: var(--f-body); font-weight: 500;
   font-size: clamp(1.2rem, 2.6vw, 1.7rem); line-height: 1.4; letter-spacing: -.01em;
