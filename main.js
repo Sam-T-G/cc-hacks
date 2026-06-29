@@ -6,7 +6,8 @@
   /* ---------- Scroll reveals ---------- */
   var revealTargets = document.querySelectorAll(
     ".section .eyebrow, .big-statement, .section-title, .section-lede, " +
-    ".why-body, .why-cards, .facts, .levels, .levels-status, .dial, " +
+    ".hack-lead, .hack-subhead, .htimeline, .hack-format-note, .qa-grid, " +
+    ".why-body, .why-cards, .facts, .levels, .levels-status, .mesa-track, .dial, " +
     ".tier-panel, .scope-foot, .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta"
   );
   revealTargets.forEach(function (el) { el.classList.add("reveal"); });
@@ -65,7 +66,7 @@
       posture: "Our target event",
       funded: "GDG supplement, plus some sponsorship.",
       count: "100–150",
-      format: "One day or overnight",
+      format: "One full day",
       food: "Catered meals",
       prizes: "Solid cash and hardware",
       prog: "Workshops and mentors"
@@ -75,7 +76,7 @@
       posture: "If the sponsorship lands",
       funded: "GDG supplement, strong sponsorship, and partners.",
       count: "150–250+",
-      format: "Weekend, overnight",
+      format: "Full day, or a weekend",
       food: "Full catering",
       prizes: "Strong cash and sponsor prizes",
       prog: "Named tracks and speakers"

@@ -63,7 +63,7 @@ a { color: inherit; }
 /* ---------- Brand mark ---------- */
 .brand { display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; }
 .brand-word { font-family: var(--f-mono); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
-.brand-dots { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5px; }
+.brand-dots { display: inline-grid; grid-template-columns: repeat(2, auto); gap: 2.5px; width: -moz-fit-content; width: fit-content; }
 .brand-dots i { width: 7px; height: 7px; border-radius: 50%; display: block; }
 .brand-dots i:nth-child(1) { background: var(--blue); }
 .brand-dots i:nth-child(2) { background: var(--red); }
@@ -338,6 +338,75 @@ a { color: inherit; }
   .funding { grid-template-columns: 1fr; }
   .fund-list li { grid-template-columns: 1fr; gap: .25rem; }
 }
+
+/* ============================================================
+   HACKATHON 101 — full-bleed explainer band
+   ============================================================ */
+.hack101 {
+  max-width: none; background: var(--paper-2);
+  padding-left: 0; padding-right: 0; padding-bottom: var(--sec-y);
+}
+.hack101 > * { max-width: var(--maxw); margin-left: auto; margin-right: auto; padding-left: var(--pad); padding-right: var(--pad); }
+.hack-lead {
+  font-family: var(--f-body); font-weight: 500;
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem); line-height: 1.4; letter-spacing: -.01em;
+  max-width: 62ch; color: var(--ink); margin-bottom: 1rem;
+}
+.hack-subhead {
+  font-family: var(--f-display); font-weight: 700;
+  font-size: clamp(1.25rem, 2.6vw, 1.8rem); letter-spacing: -.02em;
+  margin: 3.5rem 0 1.75rem; display: flex; align-items: center; gap: .7rem;
+}
+.hack-subhead-mark { width: 13px; height: 13px; border-radius: 4px; background: var(--blue); flex-shrink: 0; }
+
+.htimeline { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+.tstop { --c: var(--blue); position: relative; padding-top: 1.85rem; }
+.tstop-blue { --c: var(--blue); } .tstop-red { --c: var(--red); } .tstop-amber { --c: var(--amber); } .tstop-green { --c: var(--green); }
+.tstop::before { content: ""; position: absolute; top: 5px; left: 6px; right: -1.25rem; height: 2px; background: var(--line); }
+.tstop:last-child::before { display: none; }
+.tstop::after { content: ""; position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--paper-2); }
+.tstop-time { font-family: var(--f-mono); font-weight: 700; font-size: .85rem; color: var(--c); display: block; }
+.tstop-title { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; letter-spacing: -.01em; display: block; margin: .15rem 0 .35rem; }
+.tstop-desc { font-size: .92rem; line-height: 1.4; color: var(--ink-soft); display: block; }
+
+.hack-format-note {
+  margin-top: .5rem; font-size: 1.05rem; color: var(--ink-soft);
+  background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--amber);
+  border-radius: 12px; padding: 1rem 1.25rem; max-width: 66ch;
+}
+.hack-format-note strong { color: var(--ink); }
+
+.qa-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2.5rem; margin-top: 1.5rem; }
+.qa dt { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -.01em; margin-bottom: .45rem; }
+.qa dd { color: var(--ink-soft); line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .htimeline { grid-template-columns: 1fr; gap: 0; }
+  .tstop { padding: 0 0 1.6rem 1.85rem; }
+  .tstop:last-child { padding-bottom: 0; }
+  .tstop::before { display: block; top: 6px; bottom: auto; left: 6px; right: auto; width: 2px; height: 100%; }
+  .tstop:last-child::before { display: none; }
+}
+@media (max-width: 700px) { .qa-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* ============================================================
+   MESA TRACK — featured panel inside Involvement
+   ============================================================ */
+.mesa-track {
+  margin-top: 2.5rem; background: var(--ink); color: var(--paper);
+  border-radius: var(--radius); padding: clamp(1.75rem, 4vw, 2.75rem);
+  position: relative; overflow: hidden;
+}
+.mesa-track .brand-dots { margin-bottom: 1.25rem; }
+.mesa-track .brand-dots i { width: 9px; height: 9px; }
+.mt-label { font-family: var(--f-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--amber); margin-bottom: .75rem; }
+.mt-title { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.025em; margin-bottom: 1rem; }
+.mt-body { color: color-mix(in srgb, var(--paper) 85%, transparent); max-width: 66ch; font-size: 1.08rem; line-height: 1.6; margin-bottom: 2rem; }
+.mt-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; border-top: 1px solid color-mix(in srgb, var(--paper) 20%, transparent); padding-top: 1.5rem; position: relative; z-index: 1; }
+.mt-specs dt { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: color-mix(in srgb, var(--paper) 58%, transparent); margin-bottom: .4rem; }
+.mt-specs dd { font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
+.mesa-track::after { content: ""; position: absolute; right: -50px; top: -50px; width: 190px; height: 190px; background: radial-gradient(circle, color-mix(in srgb, var(--amber) 38%, transparent), transparent 70%); }
+@media (max-width: 700px) { .mt-specs { grid-template-columns: 1fr; gap: 1.25rem; } }
 
 /* ============================================================
    THE ASK — dark section
