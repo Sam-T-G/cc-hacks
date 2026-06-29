@@ -6,7 +6,7 @@
   /* ---------- Scroll reveals ---------- */
   var revealTargets = document.querySelectorAll(
     ".section .eyebrow, .big-statement, .section-title, .section-lede, " +
-    ".hack-lead, .hack-subhead, .htimeline, .hack-format-note, .qa-grid, " +
+    ".hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status, " +
     ".why-body, .why-cards, .facts, .levels, .levels-status, .mesa-track, .dial, " +
     ".tier-panel, .scope-foot, .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta"
   );
@@ -56,7 +56,7 @@
       posture: "The smallest strong event",
       funded: "Underwritten by the GDG supplement on its own.",
       count: "50–80",
-      format: "One day, single campus",
+      venue: "One campus room",
       food: "Snacks and a meal",
       prizes: "Modest, swag and gift cards",
       prog: "Kickoff and judging"
@@ -66,7 +66,7 @@
       posture: "Our target event",
       funded: "GDG supplement, plus some sponsorship.",
       count: "100–150",
-      format: "One full day",
+      venue: "A larger campus space",
       food: "Catered meals",
       prizes: "Solid cash and hardware",
       prog: "Workshops and mentors"
@@ -76,7 +76,7 @@
       posture: "If the sponsorship lands",
       funded: "GDG supplement, strong sponsorship, and partners.",
       count: "150–250+",
-      format: "Full day, or a weekend",
+      venue: "Large or multi-campus",
       food: "Full catering",
       prizes: "Strong cash and sponsor prizes",
       prog: "Named tracks and speakers"
@@ -91,7 +91,7 @@
     posture: document.getElementById("tier-posture"),
     funded: document.getElementById("tier-funded"),
     count: document.getElementById("tier-count"),
-    format: document.getElementById("spec-format"),
+    venue: document.getElementById("spec-venue"),
     food: document.getElementById("spec-food"),
     prizes: document.getElementById("spec-prizes"),
     prog: document.getElementById("spec-prog")
@@ -115,7 +115,7 @@
       els.posture.textContent = t.posture;
       els.funded.textContent = t.funded;
       els.count.textContent = t.count;
-      els.format.textContent = t.format;
+      els.venue.textContent = t.venue;
       els.food.textContent = t.food;
       els.prizes.textContent = t.prizes;
       els.prog.textContent = t.prog;
