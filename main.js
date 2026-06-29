@@ -7,8 +7,10 @@
   var revealTargets = document.querySelectorAll(
     ".section .eyebrow, .big-statement, .section-title, .section-lede, " +
     ".hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status, " +
-    ".why-body, .why-cards, .facts, .levels, .levels-status, .mesa-track, .dial, " +
-    ".tier-panel, .scope-foot, .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta"
+    ".why-body, .why-cards, .facts, .levels, .levels-status, .mesa-track, " +
+    ".podium, .track-cards, .track-matrix, .dial, .tier-panel, .scope-foot, " +
+    ".reach-stats, .reach-strategy, .roster, " +
+    ".anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta"
   );
   revealTargets.forEach(function (el) { el.classList.add("reveal"); });
 
