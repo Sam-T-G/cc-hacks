@@ -562,7 +562,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   html.motion :is(
     .section .eyebrow, .big-statement, .section-title, .section-lede,
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
-    .why-body, .why-cards, .gdg-grid, .facts, .levels, .levels-status, .mesa-track,
+    .why-body, .why-cards, .gdg-grid, .gdg-proof, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot,
     .reach-stats, .reach-strategy, .roster,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
@@ -605,6 +605,20 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .gdg-pk { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -.01em; }
 .gdg-pv { color: var(--ink-soft); font-size: .98rem; line-height: 1.4; }
 @media (max-width: 760px) { .gdg-grid { grid-template-columns: 1fr; gap: 1.75rem; } }
+
+/* GDG proof: the chapter at Google I/O */
+.gdg-proof { margin-top: 3rem; }
+.gdg-proof-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.gdg-photo {
+  display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: var(--radius); border: 1px solid var(--line); background: var(--paper-2);
+}
+.gdg-proof-cap {
+  margin-top: 1.1rem; font-family: var(--f-mono); font-size: .82rem; line-height: 1.6;
+  color: var(--muted); max-width: 72ch;
+}
+.gdg-proof-cap b { color: var(--ink); font-weight: 700; }
+@media (max-width: 560px) { .gdg-proof-imgs { gap: .6rem; } }
 
 /* ============================================================
    BRAND / PARTNER LOGOS
