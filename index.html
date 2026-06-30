@@ -4,17 +4,37 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script>
-  /* Pre-paint: enable motion only when reduced-motion is off, so reveal targets
-     are hidden before first paint (no flash) and never hidden otherwise. */
-  if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.add('motion');
-  }
+  /* Pre-paint: mark JS on (so no-JS fallbacks resolve before first paint), and enable
+     motion only when reduced-motion is off, so reveal targets are hidden with no flash
+     and never hidden otherwise. The failsafe reveals everything if the bundle never runs
+     (load error, blocked script): without it, .motion would leave sections stuck hidden. */
+  (function () {
+    var de = document.documentElement;
+    de.classList.add('js');
+    if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      de.classList.add('motion');
+      window.__revealFailsafe = window.setTimeout(function () {
+        de.classList.remove('motion');
+      }, 4000);
+    }
+  })();
 </script>
 <title>CC Hacks — a partnership proposal for MESA</title>
 <meta name="description" content="CC Hacks is a community-college-only hackathon from GDG @ RCC. A partnership proposal for RCC MESA and MVC MESA: what a hackathon is, who runs it, why it fits your students, and how MESA can be part of it." />
 <meta property="og:title" content="CC Hacks — a partnership proposal for MESA" />
 <meta property="og:description" content="A community-college-only hackathon from GDG @ RCC. Built for the students MESA supports." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://sam-t-g.github.io/cc-hacks/" />
+<meta property="og:image" content="https://sam-t-g.github.io/cc-hacks/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="CC Hacks — a community-college-only hackathon from GDG @ RCC" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="CC Hacks — a partnership proposal for MESA" />
+<meta name="twitter:description" content="A community-college-only hackathon from GDG @ RCC. Built for the students MESA supports." />
+<meta name="twitter:image" content="https://sam-t-g.github.io/cc-hacks/assets/og-cover.png" />
+<meta name="theme-color" content="#FCFAF5" />
+<link rel="canonical" href="https://sam-t-g.github.io/cc-hacks/" />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,9 +78,9 @@
     <div class="hero-meta">
       <span class="chip"><i class="dot dot-blue"></i> Community-college-only</span>
       <span class="chip"><i class="dot dot-green"></i> Organized by GDG @ RCC</span>
-      <span class="chip"><i class="dot dot-red"></i> MVC + Norco + more</span>
+      <span class="chip"><i class="dot dot-red"></i> Across SoCal community colleges</span>
     </div>
-    <p class="hero-sponsor"><span class="hero-sponsor-by">Sponsored by</span> <img class="hero-sponsor-logo" src="/assets/logos/google.svg" alt="Google" /> <span class="hero-sponsor-note">via GDG @ RCC</span></p>
+    <p class="hero-sponsor"><span class="hero-sponsor-by">Sponsored by</span> <img class="hero-sponsor-logo" src="/assets/logos/google.svg" alt="Google" /> <span class="hero-sponsor-note">in-kind, via GDG @ RCC</span></p>
     <a class="scroll-cue" href="#hackathon" aria-label="Scroll to the hackathon explainer">
       <span>New to hackathons? Start here</span>
       <svg width="14" height="22" viewBox="0 0 14 22" fill="none" aria-hidden="true"><path d="M7 1v18m0 0 5-5m-5 5-5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -121,16 +141,16 @@
     <h2 class="section-title" id="event-title">CC Hacks, in brief</h2>
     <dl class="facts">
       <div class="fact"><dt>Who it's for</dt><dd>Any community college student, or a recent grad from the last semester.</dd></div>
-      <div class="fact"><dt>Who runs it</dt><dd><span class="fact-logos"><span class="gdg-lockup">GDG <span class="gdg-rcc">@ RCC</span></span><img class="brand-logo" src="/assets/logos/google-g.svg" alt="Google" /></span>Part of Google Developer Groups, with partner colleges (Moreno Valley, Norco, and more).</dd></div>
+      <div class="fact"><dt>Who runs it</dt><dd><span class="fact-logos"><span class="gdg-lockup">GDG <span class="gdg-rcc">@ RCC</span></span><img class="brand-logo" src="/assets/logos/google-g.svg" alt="Google" /></span>Part of Google Developer Groups, anchored in the Riverside Community College District (Riverside, Moreno Valley, Norco), and open to community colleges across SoCal.</dd></div>
       <div class="fact"><dt>Format</dt><dd>In-person. One focused day, or 24 hours with MLH.</dd></div>
       <div class="fact"><dt>Cost to attend</dt><dd>Free. Always.</dd></div>
     </dl>
   </section>
 
   <!-- ANCHOR COLLEGES -->
-  <section class="colleges" aria-label="Anchor colleges">
+  <section class="colleges" aria-label="Riverside Community College District">
     <div class="colleges-inner">
-      <p class="colleges-label">Anchor colleges <b>Riverside Community College District</b></p>
+      <p class="colleges-label">Anchored in the <b>Riverside Community College District</b></p>
       <div class="colleges-marks">
         <img src="/assets/logos/rcc-white.png" alt="Riverside City College" />
         <img src="/assets/logos/mvc-white.png" alt="Moreno Valley College" />
@@ -142,8 +162,8 @@
   <!-- REACH -->
   <section class="section reach" id="reach" aria-labelledby="reach-title">
     <p class="eyebrow">Filling the room <span class="sep">/</span> reach</p>
-    <h2 class="section-title" id="reach-title">We're inviting every community college in SoCal.</h2>
-    <p class="section-lede">Not just the partner campuses. Every community college in the region, reached through local student ambassadors and partner clubs rather than ads alone.</p>
+    <h2 class="section-title" id="reach-title">We're inviting community colleges across SoCal.</h2>
+    <p class="section-lede">Not just the nearby campuses. Community colleges across the region, reached through local student ambassadors and campus clubs rather than ads alone.</p>
 
     <div class="reach-stats">
       <div><span class="rs-num">56</span><span class="rs-label">colleges</span></div>
@@ -195,7 +215,7 @@
     </div>
     <div class="reach-foot-row">
       <img src="/assets/logos/ccc.png" alt="California Community Colleges" />
-      <p class="reach-foot">Verified against the official California Community Colleges directory.</p>
+      <p class="reach-foot">Drawn from the official California Community Colleges directory.</p>
     </div>
   </section>
 
@@ -241,7 +261,7 @@
       <ul class="mlh-benefits">
         <li><span class="mb-k">The MLH name</span><span class="mb-v">Instant credibility and a spot on MLH's national hackathon calendar.</span></li>
         <li><span class="mb-k">A planning coach</span><span class="mb-v">A dedicated community manager before the event, and an on-site coach during it.</span></li>
-        <li><span class="mb-k">Reach</span><span class="mb-v">Promotion to MLH's student community of 55,000+ on Discord and beyond.</span></li>
+        <li><span class="mb-k">Reach</span><span class="mb-v">Promotion to MLH's national student community on Discord and beyond.</span></li>
         <li><span class="mb-k">Tools, free</span><span class="mb-v">MLH's registration and organizer platform at no cost.</span></li>
         <li><span class="mb-k">Swag + hardware</span><span class="mb-v">Season swag and stickers, plus a hardware lab to borrow.</span></li>
         <li><span class="mb-k">Credits + mentors</span><span class="mb-v">Cloud and software credits for hackers, and a mentor network.</span></li>
@@ -268,7 +288,7 @@
     <h3 class="hack-subhead"><span class="hack-subhead-mark" aria-hidden="true"></span>Category tracks (opt-in)</h3>
     <div class="track-cards">
       <div class="tcard tcard-google">
-        <span class="tcard-tag"><i class="dot dot-blue"></i> Confirmed sponsor</span>
+        <span class="tcard-tag"><i class="dot dot-blue"></i> Confirmed in-kind sponsor</span>
         <h4 class="tcard-name"><img class="tcard-glogo" src="/assets/logos/google-g.svg" alt="" aria-hidden="true" /> Google track</h4>
         <p class="tcard-desc">Best use of Google technology, like Gemini, Firebase, or Maps.</p>
         <span class="tcard-products"><img src="/assets/logos/gemini.svg" alt="Gemini" /><img src="/assets/logos/firebase.svg" alt="Firebase" /></span>
@@ -328,23 +348,64 @@
       <span class="dial-track" aria-hidden="true"><span class="dial-thumb" id="dial-thumb"></span></span>
     </div>
 
-    <div class="tier-panel" id="tier-panel" role="tabpanel" aria-labelledby="tab-0">
-      <div class="tier-head">
-        <div>
-          <p class="tier-posture" id="tier-posture">The smallest strong event</p>
-          <p class="tier-funded" id="tier-funded">Underwritten by the GDG supplement on its own.</p>
+    <div class="tier-panels">
+      <div class="tier-panel" id="tier-panel-0" role="tabpanel" aria-labelledby="tab-0" data-tier="0">
+        <p class="tier-tag" aria-hidden="true">Tier 1 <span>Foundation</span></p>
+        <div class="tier-head">
+          <div>
+            <p class="tier-posture">The smallest strong event</p>
+            <p class="tier-funded">Underwritten by the GDG supplement on its own.</p>
+          </div>
+          <div class="tier-count">
+            <span class="tier-count-num">25–50</span>
+            <span class="tier-count-label">hackers <em>(target)</em></span>
+          </div>
         </div>
-        <div class="tier-count">
-          <span class="tier-count-num" id="tier-count">25–50</span>
-          <span class="tier-count-label">hackers <em>(target)</em></span>
-        </div>
+        <dl class="tier-specs">
+          <div class="spec"><dt>Venue</dt><dd>One campus room</dd></div>
+          <div class="spec"><dt>Food</dt><dd>Snacks and a meal</dd></div>
+          <div class="spec"><dt>Prizes</dt><dd>Modest, swag and gift cards</dd></div>
+          <div class="spec"><dt>Programming</dt><dd>Kickoff and judging</dd></div>
+        </dl>
       </div>
-      <dl class="tier-specs">
-        <div class="spec"><dt>Venue</dt><dd id="spec-venue">One campus room</dd></div>
-        <div class="spec"><dt>Food</dt><dd id="spec-food">Snacks and a meal</dd></div>
-        <div class="spec"><dt>Prizes</dt><dd id="spec-prizes">Modest, swag and gift cards</dd></div>
-        <div class="spec"><dt>Programming</dt><dd id="spec-prog">Kickoff and judging</dd></div>
-      </dl>
+      <div class="tier-panel" id="tier-panel-1" role="tabpanel" aria-labelledby="tab-1" data-tier="1">
+        <p class="tier-tag" aria-hidden="true">Tier 2 <span>Standard</span></p>
+        <div class="tier-head">
+          <div>
+            <p class="tier-posture">Our target event</p>
+            <p class="tier-funded">GDG supplement, plus some sponsorship.</p>
+          </div>
+          <div class="tier-count">
+            <span class="tier-count-num">50–125</span>
+            <span class="tier-count-label">hackers <em>(target)</em></span>
+          </div>
+        </div>
+        <dl class="tier-specs">
+          <div class="spec"><dt>Venue</dt><dd>A larger campus space</dd></div>
+          <div class="spec"><dt>Food</dt><dd>Catered meals</dd></div>
+          <div class="spec"><dt>Prizes</dt><dd>Solid cash and hardware</dd></div>
+          <div class="spec"><dt>Programming</dt><dd>Workshops and mentors</dd></div>
+        </dl>
+      </div>
+      <div class="tier-panel" id="tier-panel-2" role="tabpanel" aria-labelledby="tab-2" data-tier="2">
+        <p class="tier-tag" aria-hidden="true">Tier 3 <span>Flagship</span></p>
+        <div class="tier-head">
+          <div>
+            <p class="tier-posture">If the sponsorship lands</p>
+            <p class="tier-funded">GDG supplement, strong sponsorship, and partners.</p>
+          </div>
+          <div class="tier-count">
+            <span class="tier-count-num">125+</span>
+            <span class="tier-count-label">hackers <em>(target)</em></span>
+          </div>
+        </div>
+        <dl class="tier-specs">
+          <div class="spec"><dt>Venue</dt><dd>Large or multi-campus</dd></div>
+          <div class="spec"><dt>Food</dt><dd>Full catering</dd></div>
+          <div class="spec"><dt>Prizes</dt><dd>Strong cash and sponsor prizes</dd></div>
+          <div class="spec"><dt>Programming</dt><dd>Named tracks and speakers</dd></div>
+        </dl>
+      </div>
     </div>
 
     <p class="scope-foot">Your involvement level and the scope tier are independent. You can be a Supporter at a Flagship event, or a Co-organizer at a Foundation one.</p>
@@ -438,7 +499,7 @@
   </div>
   <div class="footer-partners">
     <div class="fp"><span class="fp-label">Organized by</span><span class="gdg-lockup">GDG <span class="gdg-rcc">@ RCC</span></span></div>
-    <div class="fp"><span class="fp-label">Sponsor</span><img class="brand-logo" src="/assets/logos/google.svg" alt="Google" /></div>
+    <div class="fp"><span class="fp-label">In-kind sponsor</span><img class="brand-logo" src="/assets/logos/google.svg" alt="Google" /></div>
     <div class="fp"><span class="fp-label">Proposed partner</span><img class="brand-logo" src="/assets/logos/mesa.png" alt="MESA" /></div>
     <div class="fp"><span class="fp-label">Applying to</span><img class="brand-logo" src="/assets/logos/mlh.svg" alt="Major League Hacking" /></div>
   </div>

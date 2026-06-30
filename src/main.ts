@@ -21,7 +21,7 @@ const REVEAL_SELECTOR =
   '.section .eyebrow, .big-statement, .section-title, .section-lede, ' +
   '.hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status, ' +
   '.why-body, .why-cards, .gdg-grid, .facts, .levels, .levels-status, .mesa-track, ' +
-  '.podium, .track-cards, .track-matrix, .dial, .tier-panel, .scope-foot, ' +
+  '.podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot, ' +
   '.reach-stats, .reach-strategy, .roster, ' +
   '.anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta';
 
@@ -56,6 +56,14 @@ if (motion) {
         { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true },
       ),
   });
+
+  /* Reveal pass is wired up: cancel the pre-paint failsafe (in index.html <head>) that
+     would otherwise strip `.motion` and force everything visible. */
+  const failsafe = (window as any).__revealFailsafe;
+  if (failsafe) {
+    window.clearTimeout(failsafe);
+    (window as any).__revealFailsafe = null;
+  }
 
   /* ---------- Hero intro: staggered reveal ---------- */
   const HERO_ELS =
@@ -199,69 +207,18 @@ levels.forEach((btn, i) => {
   });
 });
 
-/* ---------- Scope tiers: the dial ---------- */
-interface Tier {
-  color: string;
-  posture: string;
-  funded: string;
-  count: string;
-  venue: string;
-  food: string;
-  prizes: string;
-  prog: string;
-}
-
-const tiers: Tier[] = [
-  {
-    color: 'var(--blue)',
-    posture: 'The smallest strong event',
-    funded: 'Underwritten by the GDG supplement on its own.',
-    count: '25–50',
-    venue: 'One campus room',
-    food: 'Snacks and a meal',
-    prizes: 'Modest, swag and gift cards',
-    prog: 'Kickoff and judging',
-  },
-  {
-    color: 'var(--green)',
-    posture: 'Our target event',
-    funded: 'GDG supplement, plus some sponsorship.',
-    count: '50–125',
-    venue: 'A larger campus space',
-    food: 'Catered meals',
-    prizes: 'Solid cash and hardware',
-    prog: 'Workshops and mentors',
-  },
-  {
-    color: 'var(--red)',
-    posture: 'If the sponsorship lands',
-    funded: 'GDG supplement, strong sponsorship, and partners.',
-    count: '125+',
-    venue: 'Large or multi-campus',
-    food: 'Full catering',
-    prizes: 'Strong cash and sponsor prizes',
-    prog: 'Named tracks and speakers',
-  },
-];
-
+/* ---------- Scope tiers: the dial ----------
+   All three tier panels live in the static HTML (so no-JS and crawlers see every tier).
+   JS enhances: show the active panel, hide the rest, and recolor per tier. */
 const scopeEl = document.querySelector<HTMLElement>('.scope');
 const dialBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.dial-btn'));
 const thumb = document.getElementById('dial-thumb');
-const panel = document.getElementById('tier-panel');
-const els = {
-  posture: document.getElementById('tier-posture'),
-  funded: document.getElementById('tier-funded'),
-  count: document.getElementById('tier-count'),
-  venue: document.getElementById('spec-venue'),
-  food: document.getElementById('spec-food'),
-  prizes: document.getElementById('spec-prizes'),
-  prog: document.getElementById('spec-prog'),
-};
+const tierPanels = Array.from(document.querySelectorAll<HTMLElement>('.tier-panel'));
+const tierColors = ['var(--blue)', 'var(--green)', 'var(--red)'];
 let current = 0;
 
-function paint(i: number, animate: boolean): void {
-  const t = tiers[i];
-  if (scopeEl) scopeEl.style.setProperty('--tc', t.color);
+function paintTier(i: number, animate: boolean): void {
+  if (scopeEl) scopeEl.style.setProperty('--tc', tierColors[i] || 'var(--blue)');
   if (thumb) thumb.style.transform = 'translateX(' + i * 100 + '%)';
   dialBtns.forEach((b, bi) => {
     const on = bi === i;
@@ -269,53 +226,45 @@ function paint(i: number, animate: boolean): void {
     b.setAttribute('aria-selected', on ? 'true' : 'false');
     b.tabIndex = on ? 0 : -1;
   });
-  if (panel) panel.setAttribute('aria-labelledby', 'tab-' + i);
+  tierPanels.forEach((p, pi) => {
+    p.hidden = pi !== i;
+  });
 
-  const fill = () => {
-    if (els.posture) els.posture.textContent = t.posture;
-    if (els.funded) els.funded.textContent = t.funded;
-    if (els.count) els.count.textContent = t.count;
-    if (els.venue) els.venue.textContent = t.venue;
-    if (els.food) els.food.textContent = t.food;
-    if (els.prizes) els.prizes.textContent = t.prizes;
-    if (els.prog) els.prog.textContent = t.prog;
-  };
-
-  if (animate && !prefersReduced()) {
-    fill();
+  const active = tierPanels[i];
+  if (active && animate && !prefersReduced()) {
     gsap.fromTo(
-      '#tier-panel .spec dd, #tier-posture, #tier-funded',
+      active.querySelectorAll('.spec dd, .tier-posture, .tier-funded'),
       { autoAlpha: 0, y: 8 },
       { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.045, ease: 'power2.out', overwrite: true },
     );
     gsap.fromTo(
-      '#tier-count',
+      active.querySelector('.tier-count-num'),
       { scale: 0.82 },
       { scale: 1, duration: 0.45, ease: 'power3.out', overwrite: true, transformOrigin: 'left bottom' },
     );
-  } else {
-    fill();
   }
   current = i;
 }
 
-dialBtns.forEach((btn, i) => {
-  btn.addEventListener('click', () => {
-    if (i !== current) paint(i, true);
+if (tierPanels.length) {
+  dialBtns.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      if (i !== current) paintTier(i, true);
+    });
+    btn.addEventListener('keydown', (e: KeyboardEvent) => {
+      let next: number | null = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (current + 1) % tierPanels.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp')
+        next = (current - 1 + tierPanels.length) % tierPanels.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tierPanels.length - 1;
+      if (next !== null) {
+        e.preventDefault();
+        paintTier(next, true);
+        dialBtns[next].focus();
+      }
+    });
   });
-  btn.addEventListener('keydown', (e: KeyboardEvent) => {
-    let next: number | null = null;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (current + 1) % tiers.length;
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp')
-      next = (current - 1 + tiers.length) % tiers.length;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = tiers.length - 1;
-    if (next !== null) {
-      e.preventDefault();
-      paint(next, true);
-      dialBtns[next].focus();
-    }
-  });
-});
 
-paint(0, false);
+  paintTier(0, false);
+}
