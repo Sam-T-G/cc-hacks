@@ -206,6 +206,27 @@ section[id], .hero { scroll-margin-top: 88px; }
   margin-bottom: 2.25rem;
 }
 .big-statement .ink-muted { color: var(--muted); }
+
+/* Why MESA peak: the thesis, the largest in-body moment on the page */
+.why-thesis {
+  font-family: var(--f-display); font-weight: 800;
+  font-size: clamp(2.3rem, 6.5vw, 4.6rem); line-height: 1.02; letter-spacing: -.035em;
+  margin: 2.75rem 0; max-width: 17ch; text-wrap: balance;
+}
+.why-thesis .why-em {
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--amber) 52%, transparent) 58%);
+}
+
+/* De-risker beat: a calm, confident statement that the floor is already covered */
+.assurance-line {
+  font-family: var(--f-display); font-weight: 800;
+  font-size: clamp(2rem, 5.5vw, 3.6rem); line-height: 1.0; letter-spacing: -.03em;
+  margin-bottom: 1.25rem; max-width: 16ch; text-wrap: balance;
+}
+.assurance-line .ok {
+  background: linear-gradient(transparent 60%, color-mix(in srgb, var(--green) 40%, transparent) 60%);
+}
+.assurance-sub { max-width: 56ch; }
 .why-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; max-width: 60rem; }
 .why-body p { font-size: 1.15rem; }
 .why-note { color: var(--ink-soft); background: color-mix(in srgb, var(--green) 7%, var(--paper)); border: 1px solid color-mix(in srgb, var(--green) 24%, var(--line)); border-radius: 12px; padding: 1rem 1.15rem; font-size: 1.02rem !important; }
@@ -560,9 +581,9 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
    Keep this list in sync with REVEAL_SELECTOR in src/main.ts. */
 @media screen {
   html.motion :is(
-    .section .eyebrow, .big-statement, .section-title, .section-lede,
+    .section .eyebrow, .big-statement, .why-thesis, .assurance-line, .section-title, .section-lede,
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
-    .why-body, .why-cards, .gdg-cred, .gdg-grid, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
+    .why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot,
     .reach-stats, .reach-strategy, .roster,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
@@ -609,12 +630,21 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 /* GDG credential chip: at-a-glance validity, just under the claim */
 .gdg-cred {
   display: inline-flex; align-items: center; gap: .55rem; flex-wrap: wrap;
-  width: -moz-fit-content; width: fit-content; margin: -.25rem 0 1.75rem;
+  width: -moz-fit-content; width: fit-content; margin: -.25rem 0 .55rem;
   font-family: var(--f-mono); font-size: .8rem; color: var(--ink-soft);
   background: var(--card); border: 1px solid var(--line);
   padding: .5rem .9rem; border-radius: 999px;
 }
 .gdg-cred-g { height: 1.05em; width: auto; display: block; }
+.gdg-advisor { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); margin: 0 0 1.75rem; }
+
+/* GDG track record: hard proof the same students have run real events */
+.gdg-record { margin-top: 3rem; }
+.gr-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2.5rem; margin-top: 1.5rem; }
+.gr-list li { display: flex; flex-direction: column; gap: .4rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+.gr-k { font-family: var(--f-display); font-weight: 700; font-size: 1.18rem; letter-spacing: -.01em; line-height: 1.15; }
+.gr-v { color: var(--ink-soft); font-size: .96rem; line-height: 1.45; }
+@media (max-width: 700px) { .gr-list { grid-template-columns: 1fr; gap: 1.25rem; } }
 
 /* GDG signature: dark editorial credential panel — the chapter on the ground at Google I/O.
    Photos pop on ink; the amber label + place read like a press credential. */
