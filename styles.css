@@ -674,14 +674,16 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   gap: 1rem 1.5rem; margin-bottom: 1.5rem;
 }
 .gdg-io-brand { flex-shrink: 0; }
-/* Logo left, panel label right-justified. Stacked mark on desktop; the compact
-   horizontal mark (also dark-surface friendly) on mobile, where vertical room is tight. */
+/* Wide viewport: horizontal lockup on the left, panel label right-justified.
+   Condensed viewport: the head stacks, with the vertical lockup left-justified above
+   a left-aligned label (both dark-surface friendly). */
 .gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; text-align: right; }
-.gdg-io-logo-stack { height: 72px; width: auto; display: block; }
-.gdg-io-logo-horiz { display: none; }
+.gdg-io-logo-horiz { height: 40px; width: auto; display: block; }
+.gdg-io-logo-stack { display: none; }
 @media (max-width: 640px) {
-  .gdg-io-logo-stack { display: none; }
-  .gdg-io-logo-horiz { display: block; height: 22px; width: auto; }
+  .gdg-io-head { flex-direction: column; align-items: flex-start; }
+  .gdg-io-logo-horiz { display: none; }
+  .gdg-io-logo-stack { display: block; height: 84px; width: auto; }
   .gdg-io-meta { align-items: flex-start; text-align: left; }
 }
 .gdg-io-label {
