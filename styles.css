@@ -635,7 +635,7 @@ body.js .reveal.is-visible { opacity: 1; transform: none; transition: opacity .7
     radial-gradient(circle at 65% 33%, color-mix(in srgb, var(--red) 58%, transparent), transparent 41%),
     radial-gradient(circle at 35% 65%, color-mix(in srgb, var(--amber) 66%, transparent), transparent 41%),
     radial-gradient(circle at 65% 65%, color-mix(in srgb, var(--green) 58%, transparent), transparent 41%);
-  filter: blur(52px); opacity: .5;
+  filter: blur(64px); opacity: .3;
 }
 
 /* Why MESA: the two brands carry the parallel claim */
@@ -661,18 +661,7 @@ body.js .reveal.is-visible { opacity: 1; transform: none; transition: opacity .7
 .tcard-google > * { position: relative; z-index: 1; }
 .tcard-products { padding-top: .65rem; border-top: 1px solid var(--line-soft); }
 
-/* The ask: oversized faint cc_hacks 4-dot mark signs off the page */
-.ask { position: relative; overflow: hidden; }
-.ask::before { content: ""; position: absolute; pointer-events: none; z-index: 0;
-  right: clamp(-3rem, -1vw, -1rem); bottom: clamp(-3rem, -2vw, -1rem);
-  width: min(440px, 52vw); aspect-ratio: 1;
-  background:
-    radial-gradient(circle at 27% 27%, var(--blue) 0 11.5%, transparent 12.5%),
-    radial-gradient(circle at 73% 27%, var(--red) 0 11.5%, transparent 12.5%),
-    radial-gradient(circle at 27% 73%, var(--amber) 0 11.5%, transparent 12.5%),
-    radial-gradient(circle at 73% 73%, var(--green) 0 11.5%, transparent 12.5%);
-  opacity: .16; }
-.ask > * { position: relative; z-index: 1; }
+/* The ask closes on type and the amber CTA alone. No decorative mark. */
 
 /* Hero: explicit Google sponsor lockup */
 .hero-sponsor { display: inline-flex; align-items: center; gap: .65rem; flex-wrap: wrap; width: fit-content; margin-bottom: 2.75rem; }
@@ -683,6 +672,9 @@ body.js .reveal.is-visible { opacity: 1; transform: none; transition: opacity .7
 /* Reach: faint California Community Colleges seal behind the roster */
 .reach { position: relative; overflow: hidden; }
 .reach::before { content: ""; position: absolute; pointer-events: none; z-index: 0;
-  right: clamp(-5rem, -3vw, -1rem); top: 36%; width: min(560px, 56vw); aspect-ratio: 1;
-  background: url("assets/logos/ccc.png") no-repeat center / contain; opacity: .05; }
+  right: clamp(-5rem, -3vw, -1rem); top: 40%; width: min(480px, 50vw); aspect-ratio: 1;
+  background: url("assets/logos/ccc.png") no-repeat center / contain; opacity: .03; }
 .reach > * { position: relative; z-index: 1; }
+
+/* Refinement: drop the numbered-badge eyebrows for a cleaner editorial cadence */
+.eyebrow .num { display: none; }
