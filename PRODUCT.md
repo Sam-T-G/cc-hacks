@@ -16,8 +16,17 @@ event's public landing page and the website MLH Member Events require.
 
 ## The page's job
 
-Convince MESA to partner: explain what a hackathon is, show why it fits their students, lay out how
-they plug in (involvement levels, their own MESA track), and prove it is a real, regional, funded event.
+Convince MESA to partner: explain what a hackathon is, establish who's behind it (the student-led
+GDG @ RCC chapter), show why it fits their students, lay out how they plug in (involvement levels,
+their own MESA track), and prove it is a real, regional, funded event.
+
+## Flow (current order)
+
+Ordered to lead with who/why before operational detail, group the proof, and put the participation
+ask beside the close:
+
+Hero → Hackathon 101 → Who's behind this (GDG @ RCC) → Why MESA → The event → Anchor colleges →
+Reach → Formats → Tracks & prizes → Scope tiers → Funding → Your involvement → The ask.
 
 ## Lane
 
@@ -38,7 +47,7 @@ but every element must stay legible and easy to navigate for a non-technical edu
 - The default AI-hackathon look: near-black background with a single neon accent.
 - Corporate slide-deck or template-marketplace aesthetics.
 - The cream + high-contrast-serif + terracotta "AI design" cliché.
-- Generic numbered "01 / 02 / 03" decoration used where the content is not actually a sequence.
+- Generic numbered "01 / 02 / 03" decoration on every section. (Removed; eyebrows are plain labels now. Do not reintroduce.)
 
 ## Non-negotiables
 

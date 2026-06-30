@@ -5,28 +5,43 @@ current page is a **partnership proposal for RCC MESA and MVC MESA**.
 
 Live: https://sam-t-g.github.io/cc-hacks/
 
-## What it is
+## Stack
 
-A single static page (no build step), so GitHub Pages serves it directly from `main`:
+A **Vite + TypeScript** single page with a GSAP / Lenis motion layer, deployed to GitHub Pages by a
+GitHub Action (not branch-root serving).
 
-- `index.html` — the page
-- `styles.css` — design system (warm paper, ink, a Google-color tier system)
-- `main.js` — the interactive scope-tier dial, selectable involvement cards, scroll reveals
-- `assets/` — favicon
+- `index.html` — the page (Vite entry; includes a pre-paint inline `motion` script)
+- `styles.css` — design system (warm paper, ink, a Google-color tier system); imported by `src/main.ts`
+- `src/main.ts` — Lenis smooth scroll, GSAP/ScrollTrigger reveals, the hero intro, the scope-tier
+  dial, selectable involvement cards, count-up stats, track-matrix hover highlight, scroll-progress bar
+- `public/assets/` — logos (Google, Gemini, Firebase, MESA, MLH, the RCCD colleges, CCC) + favicon;
+  referenced as root-absolute `/assets/...`
+- `vite.config.ts` — `base: '/cc-hacks/'` for the Pages project subpath
+- `.github/workflows/deploy.yml` — build + deploy to Pages
 
 ## Run locally
 
-Open `index.html` in a browser, or:
-
 ```bash
-python3 -m http.server 8000   # then visit http://localhost:8000
+npm install
+npm run dev       # http://localhost:5173/cc-hacks/
+npm run build     # outputs dist/ (gitignored)
+npm run preview   # serve the production build
 ```
+
+## Deploy
+
+Push to `main`. The Action builds `dist/` and publishes it to Pages (~1.5 min). Pages source is set to
+**GitHub Actions** (`build_type: workflow`). Raw `index.html` served directly will not work; it needs
+the build.
 
 ## Notes
 
 - Attendance figures shown are **targets**, not commitments.
 - The GDG @ RCC funding supplement (up to $10,000) is **pending ASRCC approval**.
-- Detailed, internal planning lives in the private `gdg-cc-hackathon` repo. This repo is public on
-  purpose: it's the outward-facing site and proposal.
-
-Built to also serve as the foundation for the event website MLH Member Events require.
+- Motion respects `prefers-reduced-motion`, and the page renders fully with no JS, reduced motion, or
+  in print (reveal targets are hidden only on screen + motion).
+- GDG @ RCC is currently an interim text lockup. Drop the official chapter lockup into
+  `public/assets/logos/gdg-rcc.svg` and swap the `.gdg-lockup` marks to use it.
+- Detailed internal planning lives in the private `gdg-cc-hackathon` repo. This repo is public on
+  purpose: it's the outward-facing site and proposal. Also serves as the foundation for the event
+  website MLH Member Events require.

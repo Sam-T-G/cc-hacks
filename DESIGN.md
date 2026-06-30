@@ -1,7 +1,8 @@
 # DESIGN.md — CC Hacks
 
 The design language for this site. Read this before changing visuals; keep new work consistent with
-it. Pairs with [PRODUCT.md](PRODUCT.md).
+it. Pairs with [PRODUCT.md](PRODUCT.md). The site is a Vite + TypeScript build with a GSAP / Lenis
+motion layer; see [README.md](README.md) for run and deploy.
 
 ## Direction
 
@@ -56,10 +57,19 @@ Not Inter, not a serif display. The trio is the typographic signature.
 
 ## Motion
 
-- Shared easing `--ease` (cubic-bezier(.2,.7,.3,1)) for transitions.
-- Scroll reveals are subtle (opacity + small translate), one orchestrated hero load-in. Everything
-  respects `prefers-reduced-motion`.
-- Spend motion on the dial and reveals; keep the rest quiet.
+A GSAP + Lenis system in `src/main.ts`, restrained register (eased, no bounce).
+
+- **Lenis** smooth scroll, wired to the GSAP ticker; smooth in-page anchor nav.
+- **GSAP / ScrollTrigger** choreographed, staggered reveals (replaces the old IntersectionObserver),
+  plus one orchestrated hero intro.
+- Signature touches: scope-dial spec transitions, count-up reach stats, track-matrix row/column hover
+  highlight, a Google-color scroll-progress bar, a magnetic "Let's talk" CTA.
+- **Gating:** all motion sits behind a pre-paint `.motion` class (added only when reduced-motion is
+  off). Reveal targets are hidden via `@media screen { html.motion :is(...) }` and animated in, so the
+  page renders fully with no JS, reduced motion, or in print. Keep that reveal list in `styles.css` in
+  sync with `REVEAL_SELECTOR` in `src/main.ts`.
+- Everything respects `prefers-reduced-motion`. Shared `--ease` (cubic-bezier(.2,.7,.3,1)) for CSS
+  transitions.
 
 ## Rules (anti-slop)
 
