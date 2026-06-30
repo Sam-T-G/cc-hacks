@@ -40,7 +40,7 @@ the build.
 - The GDG @ RCC funding supplement (up to $10,000) is **pending ASRCC approval**.
 - Motion respects `prefers-reduced-motion`, and the page renders fully with no JS, reduced motion, or
   in print (reveal targets are hidden only on screen + motion).
-- The official GDG @ RCC lockup (`public/assets/logos/gdg-rcc.png`, the GDG On Campus horizontal
+- The official GDG @ RCC lockup (`public/assets/logos/gdg-rcc.svg`, the GDG On Campus horizontal
   mark) is wired into the nav, the "who runs it" fact, and the footer via the `.gdg-logo` class.
 - Detailed internal planning lives in the private `gdg-cc-hackathon` repo. This repo is public on
   purpose: it's the outward-facing site and proposal. Also serves as the foundation for the event
