@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+dist/
 *.log
 
 # Impeccable design tooling (installed locally via `npx impeccable install`).
