@@ -555,7 +555,7 @@ section[id], .hero { scroll-margin-top: 88px; }
   html.motion :is(
     .section .eyebrow, .big-statement, .section-title, .section-lede,
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
-    .why-body, .why-cards, .facts, .levels, .levels-status, .mesa-track,
+    .why-body, .why-cards, .gdg-grid, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panel, .scope-foot,
     .reach-stats, .reach-strategy, .roster,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
@@ -586,6 +586,18 @@ section[id], .hero { scroll-margin-top: 88px; }
 .track-matrix :is(td, th).is-row,
 .track-matrix :is(td, th).is-col { background: color-mix(in srgb, var(--ink) 4%, transparent); transition: background .15s ease; }
 .track-matrix :is(td, th).is-row.is-col { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+/* ============================================================
+   WHO'S BEHIND THIS — GDG
+   ============================================================ */
+.gdg-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem 3.5rem; align-items: start; margin-top: .5rem; }
+.gdg-aligns { font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.5; color: var(--ink); max-width: 42ch; }
+.gdg-pillars { list-style: none; display: flex; flex-direction: column; }
+.gdg-pillars li { display: flex; flex-direction: column; gap: .3rem; padding: 1.15rem 0; border-top: 1px solid var(--line); }
+.gdg-pillars li:first-child { border-top: 0; padding-top: 0; }
+.gdg-pk { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -.01em; }
+.gdg-pv { color: var(--ink-soft); font-size: .98rem; line-height: 1.4; }
+@media (max-width: 760px) { .gdg-grid { grid-template-columns: 1fr; gap: 1.75rem; } }
 
 /* ============================================================
    BRAND / PARTNER LOGOS
