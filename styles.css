@@ -108,6 +108,9 @@ section[id], .hero { scroll-margin-top: 88px; }
 .nav-cta:hover { background: var(--blue); }
 @media (max-width: 680px) {
   .nav-links a:not(.nav-cta) { display: none; }
+  /* Drop the blur on mobile: a sticky backdrop-filter repaints on every scroll frame
+     (and iOS never applied it without the -webkit- prefix anyway). Use a near-opaque bg. */
+  .nav { backdrop-filter: none; background: color-mix(in srgb, var(--paper) 96%, transparent); }
 }
 
 /* ---------- Shared section frame ---------- */
@@ -667,6 +670,10 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
     radial-gradient(circle at 35% 65%, color-mix(in srgb, var(--amber) 66%, transparent), transparent 41%),
     radial-gradient(circle at 65% 65%, color-mix(in srgb, var(--green) 58%, transparent), transparent 41%);
   filter: blur(64px); opacity: .3;
+}
+/* A 64px blur over a large element is an expensive paint on phones; shrink it there. */
+@media (max-width: 680px) {
+  .hero::before { width: min(420px, 82vw); filter: blur(40px); opacity: .26; }
 }
 
 /* Why MESA: the two brands carry the parallel claim */

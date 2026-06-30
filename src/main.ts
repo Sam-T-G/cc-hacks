@@ -26,23 +26,29 @@ const REVEAL_SELECTOR =
   '.anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta';
 
 if (motion) {
-  /* ---------- Lenis smooth scroll, driven by the GSAP ticker ---------- */
-  const lenis = new Lenis({ lerp: 0.1 });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  /* ---------- Lenis smooth scroll, driven by the GSAP ticker ----------
+     Desktop only. On touch / coarse-pointer devices, native scrolling has momentum,
+     costs no continuous main-thread rAF, and saves battery; CSS `scroll-behavior: smooth`
+     plus scroll-margin handle in-page anchors there. ScrollTrigger reveals work either way. */
+  const useLenis = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (useLenis) {
+    const lenis = new Lenis({ lerp: 0.1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
 
-  /* Smooth in-page anchor navigation through Lenis */
-  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if (!id || id === '#') return;
-      const target = document.querySelector<HTMLElement>(id);
-      if (!target) return;
-      e.preventDefault();
-      lenis.scrollTo(target, { offset: -80 });
+    /* Smooth in-page anchor navigation through Lenis */
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#') return;
+        const target = document.querySelector<HTMLElement>(id);
+        if (!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -80 });
+      });
     });
-  });
+  }
 
   /* ---------- Choreographed scroll reveals (replaces IntersectionObserver) ---------- */
   const revealTargets = gsap.utils.toArray<HTMLElement>(REVEAL_SELECTOR);
@@ -153,12 +159,25 @@ if (motion) {
 /* ---------- Scroll progress bar (Google-color, always on) ---------- */
 const progress = document.querySelector<HTMLElement>('.scroll-progress');
 if (progress) {
+  /* Cache the scrollable height so the scroll handler only reads window.scrollY (no layout
+     read per scroll = no forced reflow / jank). Recompute on resize and after load. */
+  let max = 0;
+  const measure = () => {
+    max = document.documentElement.scrollHeight - window.innerHeight;
+  };
   const update = () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
   };
   window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
+  window.addEventListener('resize', () => {
+    measure();
+    update();
+  });
+  window.addEventListener('load', () => {
+    measure();
+    update();
+  });
+  measure();
   update();
 }
 
