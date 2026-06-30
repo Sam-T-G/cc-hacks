@@ -562,7 +562,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   html.motion :is(
     .section .eyebrow, .big-statement, .section-title, .section-lede,
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
-    .why-body, .why-cards, .gdg-grid, .gdg-proof, .facts, .levels, .levels-status, .mesa-track,
+    .why-body, .why-cards, .gdg-cred, .gdg-grid, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot,
     .reach-stats, .reach-strategy, .roster,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
@@ -606,19 +606,52 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .gdg-pv { color: var(--ink-soft); font-size: .98rem; line-height: 1.4; }
 @media (max-width: 760px) { .gdg-grid { grid-template-columns: 1fr; gap: 1.75rem; } }
 
-/* GDG proof: the chapter at Google I/O */
-.gdg-proof { margin-top: 3rem; }
-.gdg-proof-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.gdg-photo {
+/* GDG credential chip: at-a-glance validity, just under the claim */
+.gdg-cred {
+  display: inline-flex; align-items: center; gap: .55rem; flex-wrap: wrap;
+  width: -moz-fit-content; width: fit-content; margin: -.25rem 0 1.75rem;
+  font-family: var(--f-mono); font-size: .8rem; color: var(--ink-soft);
+  background: var(--card); border: 1px solid var(--line);
+  padding: .5rem .9rem; border-radius: 999px;
+}
+.gdg-cred-g { height: 1.05em; width: auto; display: block; }
+
+/* GDG signature: dark editorial credential panel — the chapter on the ground at Google I/O.
+   Photos pop on ink; the amber label + place read like a press credential. */
+.gdg-io {
+  margin-top: 3rem; background: var(--ink); color: var(--paper);
+  border-radius: var(--radius); padding: clamp(1.5rem, 4vw, 2.5rem);
+  position: relative; overflow: hidden;
+}
+.gdg-io::after {
+  content: ""; position: absolute; right: -70px; top: -70px; width: 240px; height: 240px;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--blue) 26%, transparent), transparent 70%);
+}
+.gdg-io > * { position: relative; z-index: 1; }
+.gdg-io-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: .35rem 1.5rem; margin-bottom: 1.5rem;
+}
+.gdg-io-label {
+  font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--amber);
+}
+.gdg-io-place {
+  font-family: var(--f-mono); font-size: .78rem;
+  color: color-mix(in srgb, var(--paper) 60%, transparent);
+}
+.gdg-io-place .sep { color: color-mix(in srgb, var(--paper) 32%, transparent); }
+.gdg-io-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.gdg-io .gdg-photo {
   display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
-  border-radius: var(--radius); border: 1px solid var(--line); background: var(--paper-2);
+  border-radius: 12px; border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
 }
-.gdg-proof-cap {
-  margin-top: 1.1rem; font-family: var(--f-mono); font-size: .82rem; line-height: 1.6;
-  color: var(--muted); max-width: 72ch;
+.gdg-io-cap {
+  margin-top: 1.25rem; font-family: var(--f-mono); font-size: .8rem; line-height: 1.6;
+  color: color-mix(in srgb, var(--paper) 72%, transparent); max-width: 70ch;
 }
-.gdg-proof-cap b { color: var(--ink); font-weight: 700; }
-@media (max-width: 560px) { .gdg-proof-imgs { gap: .6rem; } }
+@media (max-width: 560px) { .gdg-io-imgs { gap: .6rem; } }
 
 /* ============================================================
    BRAND / PARTNER LOGOS
