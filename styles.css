@@ -583,7 +583,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   html.motion :is(
     .section .eyebrow, .big-statement, .why-thesis, .assurance-line, .section-title, .section-lede,
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
-    .why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
+    .why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-intro-logo, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot,
     .reach-stats, .reach-strategy, .roster,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
@@ -638,12 +638,22 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .gdg-cred-g { height: 1.05em; width: auto; display: block; }
 .gdg-advisor { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); margin: 0 0 1.75rem; }
 
+/* GDG @ RCC mark beside the intro lede: official branding to establish validity */
+.gdg-intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2.5rem 3rem; align-items: center; }
+.gdg-intro .section-lede { margin-bottom: 0; }
+.gdg-intro-logo { height: 140px; width: auto; justify-self: end; }
+@media (max-width: 760px) {
+  .gdg-intro { grid-template-columns: 1fr; gap: 1.5rem; justify-items: start; }
+  .gdg-intro-logo { height: 96px; justify-self: start; }
+}
+
 /* GDG track record: hard proof the same students have run real events */
 .gdg-record { margin-top: 3rem; }
 .gr-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2.5rem; margin-top: 1.5rem; }
 .gr-list li { display: flex; flex-direction: column; gap: .4rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
 .gr-k { font-family: var(--f-display); font-weight: 700; font-size: 1.18rem; letter-spacing: -.01em; line-height: 1.15; }
 .gr-v { color: var(--ink-soft); font-size: .96rem; line-height: 1.45; }
+.gr-v b { color: var(--ink); font-weight: 700; }
 @media (max-width: 700px) { .gr-list { grid-template-columns: 1fr; gap: 1.25rem; } }
 
 /* GDG signature: dark editorial credential panel — the chapter on the ground at Google I/O.
@@ -663,8 +673,17 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
   gap: 1rem 1.5rem; margin-bottom: 1.5rem;
 }
-.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; }
-.gdg-io-logo { height: 72px; width: auto; flex-shrink: 0; }
+.gdg-io-brand { flex-shrink: 0; }
+/* Logo left, panel label right-justified. Stacked mark on desktop; the compact
+   horizontal mark (also dark-surface friendly) on mobile, where vertical room is tight. */
+.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; text-align: right; }
+.gdg-io-logo-stack { height: 72px; width: auto; display: block; }
+.gdg-io-logo-horiz { display: none; }
+@media (max-width: 640px) {
+  .gdg-io-logo-stack { display: none; }
+  .gdg-io-logo-horiz { display: block; height: 22px; width: auto; }
+  .gdg-io-meta { align-items: flex-start; text-align: left; }
+}
 .gdg-io-label {
   font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em;
   color: var(--amber);

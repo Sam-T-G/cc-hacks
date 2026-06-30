@@ -20,7 +20,7 @@ const prefersReduced = () =>
 const REVEAL_SELECTOR =
   '.section .eyebrow, .big-statement, .why-thesis, .assurance-line, .section-title, .section-lede, ' +
   '.hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status, ' +
-  '.why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track, ' +
+  '.why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-intro-logo, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track, ' +
   '.podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot, ' +
   '.reach-stats, .reach-strategy, .roster, ' +
   '.anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta';
