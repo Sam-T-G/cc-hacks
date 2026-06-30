@@ -177,7 +177,7 @@ section[id], .hero { scroll-margin-top: 88px; }
   font-size: clamp(1.1rem, 2.3vw, 1.5rem); color: var(--ink-soft);
   max-width: 38ch; margin-bottom: 2.25rem; font-weight: 500;
 }
-.hero-meta { display: flex; flex-wrap: wrap; gap: .65rem; margin-bottom: 3rem; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: .65rem; margin-bottom: 1.5rem; }
 .chip {
   display: inline-flex; align-items: center; gap: .5rem;
   font-family: var(--f-mono); font-size: .8rem; color: var(--ink-soft);
@@ -555,11 +555,12 @@ body.js .reveal.is-visible { opacity: 1; transform: none; transition: opacity .7
   .hero-title .line:nth-child(1) { animation-delay: .08s; }
   .hero-title .line:nth-child(2) { animation-delay: .2s; }
   .hero-title .line:nth-child(3) { animation-delay: .32s; }
-  .hero-eyebrow, .hero-sub, .hero-meta, .scroll-cue { opacity: 0; animation: fadeUp .8s ease forwards; }
+  .hero-eyebrow, .hero-sub, .hero-meta, .hero-sponsor, .scroll-cue { opacity: 0; animation: fadeUp .8s ease forwards; }
   .hero-eyebrow { animation-delay: 0s; }
   .hero-sub { animation-delay: .5s; }
   .hero-meta { animation-delay: .62s; }
-  .scroll-cue { animation-delay: .74s; }
+  .hero-sponsor { animation-delay: .72s; }
+  .scroll-cue { animation-delay: .82s; }
 }
 @keyframes riseIn { to { opacity: 1; transform: none; } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -672,3 +673,16 @@ body.js .reveal.is-visible { opacity: 1; transform: none; transition: opacity .7
     radial-gradient(circle at 73% 73%, var(--green) 0 11.5%, transparent 12.5%);
   opacity: .16; }
 .ask > * { position: relative; z-index: 1; }
+
+/* Hero: explicit Google sponsor lockup */
+.hero-sponsor { display: inline-flex; align-items: center; gap: .65rem; flex-wrap: wrap; width: fit-content; margin-bottom: 2.75rem; }
+.hero-sponsor-by { font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-soft); }
+.hero-sponsor-logo { height: 26px; width: auto; }
+.hero-sponsor-note { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+
+/* Reach: faint California Community Colleges seal behind the roster */
+.reach { position: relative; overflow: hidden; }
+.reach::before { content: ""; position: absolute; pointer-events: none; z-index: 0;
+  right: clamp(-5rem, -3vw, -1rem); top: 36%; width: min(560px, 56vw); aspect-ratio: 1;
+  background: url("assets/logos/ccc.png") no-repeat center / contain; opacity: .05; }
+.reach > * { position: relative; z-index: 1; }
