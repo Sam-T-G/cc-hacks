@@ -660,9 +660,11 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 }
 .gdg-io > * { position: relative; z-index: 1; }
 .gdg-io-head {
-  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: .35rem 1.5rem; margin-bottom: 1.5rem;
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
+  gap: 1rem 1.5rem; margin-bottom: 1.5rem;
 }
+.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; }
+.gdg-io-logo { height: 72px; width: auto; flex-shrink: 0; }
 .gdg-io-label {
   font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em;
   color: var(--amber);
