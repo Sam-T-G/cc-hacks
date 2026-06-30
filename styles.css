@@ -685,25 +685,23 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 
 /* ============================================================
    BRAND / PARTNER LOGOS
-   Official assets: Google, Gemini, Firebase, MESA, MLH.
-   GDG @ RCC is an interim text lockup — drop assets/logos/gdg-rcc.svg
-   in and replace each .gdg-lockup with <img> once the official file lands.
+   Official assets: Google, Gemini, Firebase, MESA, MLH, and the official
+   GDG @ RCC (Google Developer Groups) horizontal lockup.
    ============================================================ */
 .brand-logo { display: inline-block; width: auto; vertical-align: middle; }
 
-.gdg-lockup { font-family: var(--f-display); font-weight: 800; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; }
-.gdg-lockup .gdg-rcc { font-weight: 600; color: var(--ink-soft); }
+/* Official GDG @ RCC lockup; sized per placement (nav / event fact / footer). */
+.gdg-logo { width: auto; display: block; }
 
 .nav-org { display: inline-flex; align-items: center; gap: .55rem; margin-left: .85rem; margin-right: auto; padding-left: .95rem; border-left: 1px solid var(--line); }
 .nav-org-by { font-family: var(--f-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
-.nav-org .gdg-lockup { font-size: 1rem; }
+.nav-org .gdg-logo { height: 17px; }
 @media (max-width: 760px) { .nav-org { display: none; } }
 
 .mesa-inline { height: 1.7em; width: auto; vertical-align: -.55em; }
 
 .fact-logos { display: flex; align-items: center; gap: 1rem; margin-bottom: .8rem; }
-.fact-logos .gdg-lockup { font-size: 1.1rem; }
-.fact-logos img { height: 1.3rem; width: auto; }
+.fact-logos img { height: 22px; width: auto; }
 
 .tcard-google .tcard-name { display: flex; align-items: center; gap: .5rem; }
 .tcard-glogo { height: 1.15em; width: auto; }
@@ -717,7 +715,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .fp { display: flex; flex-direction: column; gap: .6rem; }
 .fp-label { font-family: var(--f-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
 .fp .brand-logo { height: 28px; }
-.fp .gdg-lockup { font-size: 1.3rem; }
+.fp .gdg-logo { height: 26px; }
 
 /* Anchor colleges — full-bleed dark band, white college marks */
 .colleges { position: relative; overflow: hidden; max-width: none; background: var(--ink); color: var(--paper); margin-top: var(--sec-y); padding: clamp(3.25rem, 6vw, 5rem) 0; }
