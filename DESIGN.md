@@ -30,6 +30,10 @@ Tokens live in `:root` in `styles.css`. Color **encodes meaning**; it is not dec
 The four accents derive from the Google palette, refined and deepened. Ascending sequences run
 blue → green → red. Amber is reserved for the single most important thing in view.
 
+Wherever paper-colored text sits ON an accent (the dial thumb), use the `-ink` deepened tokens for
+AA contrast; the vivid tokens stay on big display digits, dots, bars, and fills. On the podium the
+medal color lives in the top border only; place numbers stay ink (amber is never text on white).
+
 ## Type
 
 - **Display — Bricolage Grotesque** (`--f-display`): headlines and big numbers. Tight tracking
@@ -50,7 +54,8 @@ Not Inter, not a serif display. The trio is the typographic signature.
 ## Signature elements
 
 - **Scope-tier dial:** a segmented control that morphs the event spec and recolors per tier. The
-  page's memorable interaction; the content genuinely is an escalating ladder.
+  page's memorable interaction; the content genuinely is an escalating ladder. Defaults to Tier 2,
+  the tier the copy names as the target.
 - **Track matrix:** project × track grid showing one project competing across several tracks.
 - **Color-coded rosters / tiers:** the reach roster and scope tiers use the ascending color system.
 - **4-dot brand mark:** the `cc_hacks` mark, blue/red/amber/green.
@@ -59,15 +64,20 @@ Not Inter, not a serif display. The trio is the typographic signature.
 
 A GSAP + Lenis system in `src/main.ts`, restrained register (eased, no bounce).
 
-- **Lenis** smooth scroll, wired to the GSAP ticker; smooth in-page anchor nav.
+- **Lenis** smooth scroll, wired to the GSAP ticker; smooth in-page anchor nav that also updates the
+  hash and moves keyboard focus to the target (the skip link keeps native behavior).
 - **GSAP / ScrollTrigger** choreographed, staggered reveals (replaces the old IntersectionObserver),
-  plus one orchestrated hero intro.
+  plus one orchestrated hero intro. Reveals use `autoAlpha` (opacity + visibility) so hidden elements
+  are also out of the Tab order.
 - Signature touches: scope-dial spec transitions, count-up reach stats, track-matrix row/column hover
-  highlight, a Google-color scroll-progress bar, a magnetic "Let's talk" CTA.
+  highlight (hover-capable input only), a Google-color scroll-progress bar, and the copy-morph CTA
+  (the ask button copies the email to the clipboard and the pill crossfades to show the address;
+  mailto is the no-JS fallback and the explicit "mail app" link below).
 - **Gating:** all motion sits behind a pre-paint `.motion` class (added only when reduced-motion is
   off). Reveal targets are hidden via `@media screen { html.motion :is(...) }` and animated in, so the
-  page renders fully with no JS, reduced motion, or in print. Keep that reveal list in `styles.css` in
-  sync with `REVEAL_SELECTOR` in `src/main.ts`.
+  page renders fully with no JS, reduced motion, or in print (an `@media print` block also unhides all
+  tier panels and expands the collapsed rosters; a `beforeprint` hook opens every `<details>`). Keep
+  the reveal list in `styles.css` in sync with `REVEAL_SELECTOR` in `src/main.ts`.
 - Everything respects `prefers-reduced-motion`. Shared `--ease` (cubic-bezier(.2,.7,.3,1)) for CSS
   transitions.
 

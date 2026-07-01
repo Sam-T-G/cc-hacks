@@ -15,8 +15,13 @@
       de.classList.add('motion');
       window.__revealFailsafe = window.setTimeout(function () {
         de.classList.remove('motion');
-      }, 4000);
+      }, 2500);
     }
+    /* If the module bundle never runs (load error, blocked script), restore the no-JS
+       presentation too (labeled, stacked tier panels instead of a dead dial). */
+    window.__jsFailsafe = window.setTimeout(function () {
+      de.classList.remove('js');
+    }, 3000);
   })();
 </script>
 <title>CC Hacks — a partnership proposal for MESA</title>
@@ -36,9 +41,11 @@
 <meta name="theme-color" content="#FCFAF5" />
 <link rel="canonical" href="https://sam-t-g.github.io/cc-hacks/" />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -46,7 +53,7 @@
 
 <!-- NAV -->
 <header class="nav" id="top">
-  <a class="brand" href="#top" aria-label="CC Hacks home">
+  <a class="brand" href="#top">
     <span class="brand-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span class="brand-word">cc_hacks</span>
   </a>
@@ -55,11 +62,23 @@
     <img class="gdg-logo" src="/assets/logos/gdg-rcc.svg" alt="GDG @ RCC, Riverside City College" decoding="async" />
   </span>
   <nav class="nav-links" aria-label="Sections">
-    <a href="#gdg">Who we are</a>
+    <a href="#gdg">Who's behind it</a>
     <a href="#why">Why MESA</a>
     <a href="#hackathon">Hackathon 101</a>
     <a href="#reach">Reach</a>
     <a href="#involvement">Involvement</a>
+    <details class="nav-menu">
+      <summary>Menu</summary>
+      <nav class="nav-menu-panel" aria-label="Sections menu">
+        <a href="#gdg">Who's behind it</a>
+        <a href="#why">Why MESA</a>
+        <a href="#hackathon">Hackathon 101</a>
+        <a href="#reach">Reach</a>
+        <a href="#funding">Funding</a>
+        <a href="#involvement">Involvement</a>
+        <a href="#ask">The ask</a>
+      </nav>
+    </details>
     <a class="nav-cta" href="#ask">The ask</a>
   </nav>
 </header>
@@ -68,20 +87,20 @@
 
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
-    <p class="eyebrow hero-eyebrow">Partnership proposal for <img class="mesa-inline" src="/assets/logos/mesa.png" alt="MESA"  decoding="async"/> <span class="sep">/</span> RCC <span class="times">×</span> MVC</p>
+    <p class="eyebrow hero-eyebrow">Partnership proposal for <img class="mesa-inline" src="/assets/logos/mesa.png" alt="MESA"  decoding="async"/> <span class="sep" aria-hidden="true">/</span> <span class="nowrap">RCC <span class="times" aria-hidden="true">×</span> MVC</span></p>
     <h1 class="hero-title" id="hero-title">
       <span class="line">Building the hackathon</span>
       <span class="line">community college students</span>
       <span class="line">never get <span class="hl">invited</span> to.</span>
     </h1>
-    <p class="hero-sub">A community-college-only hackathon from GDG @ RCC, built for the students who rarely get the invite. We want MESA in it, at the level that fits your program.</p>
+    <p class="hero-sub">A hackathon is a team build event: mentors, working demos, and prizes, in a day or a weekend. Ours is only for community college students, and we want MESA in it at the level that fits your program.</p>
     <div class="hero-meta">
       <span class="chip"><i class="dot dot-blue"></i> Community-college-only</span>
       <span class="chip"><i class="dot dot-green"></i> Organized by GDG @ RCC</span>
       <span class="chip"><i class="dot dot-red"></i> Across SoCal community colleges</span>
     </div>
-    <p class="hero-sponsor"><span class="hero-sponsor-by">Sponsored by</span> <img class="hero-sponsor-logo" src="/assets/logos/google.svg" alt="Google"  decoding="async"/> <span class="hero-sponsor-note">via GDG @ RCC</span></p>
-    <a class="scroll-cue" href="#gdg" aria-label="Scroll to who is behind it">
+    <p class="hero-sponsor"><span class="hero-sponsor-by">Sponsored by</span> <img class="hero-sponsor-logo" src="/assets/logos/google.svg" alt="Google"  decoding="async"/> <span class="hero-sponsor-note">in-kind, via GDG @ RCC</span></p>
+    <a class="scroll-cue" href="#gdg">
       <span>Who's behind it</span>
       <svg width="14" height="22" viewBox="0 0 14 22" fill="none" aria-hidden="true"><path d="M7 1v18m0 0 5-5m-5 5-5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -90,13 +109,13 @@
 
   <!-- WHO'S BEHIND THIS (GDG) -->
   <section class="section gdg" id="gdg" aria-labelledby="gdg-title">
-    <p class="eyebrow">Who's behind this</p>
+    <p class="eyebrow">Who's behind it</p>
     <h2 class="section-title" id="gdg-title">An official Google Developer Groups chapter, run by students.</h2>
     <p class="gdg-cred">
       <img class="gdg-cred-g" src="/assets/logos/google-g.svg" alt="Google" loading="lazy" decoding="async" />
-      <span>Official chapter <span class="sep">·</span> Riverside City College</span>
+      <span>Official chapter <span class="sep" aria-hidden="true">·</span> Riverside City College</span>
     </p>
-    <p class="gdg-advisor">Faculty advisor <span class="sep">·</span> Dr. Mark Lehr</p>
+    <p class="gdg-advisor">Faculty advisor <span class="sep" aria-hidden="true">·</span> Dr. Mark Lehr</p>
     <div class="gdg-intro">
       <p class="section-lede">Google Developer Groups are community-run chapters, backed by Google, where students learn and build together. Ours is student-led, with regular workshops, discussions, and projects.</p>
       <img class="gdg-intro-logo" src="/assets/logos/gdg-rcc.svg" alt="GDG @ RCC, Riverside City College" loading="lazy" decoding="async" />
@@ -113,7 +132,7 @@
     <div class="gdg-record">
       <h3 class="hack-subhead"><span class="hack-subhead-mark" aria-hidden="true"></span>The same students have already done this</h3>
       <ul class="gr-list">
-        <li><span class="gr-k">Sent 15 students to Cal Hacks 2025</span><span class="gr-v"><b>The world's largest collegiate hackathon</b>, 3,500+ hackers, hosted by UC Berkeley. We raised the funding and ran the logistics to get our students to San Francisco.</span></li>
+        <li><span class="gr-k">Sent 15 students to Cal Hacks 2025</span><span class="gr-v"><b>The world's largest collegiate hackathon</b>, hosted by UC Berkeley. We raised the funding and ran the logistics to get our students to San Francisco.</span></li>
         <li><span class="gr-k">Host and compete in ICPC SoCal</span><span class="gr-v">The Southern California round of the ICPC, the international collegiate programming contest.</span></li>
         <li><span class="gr-k">Led 15+ technical workshops</span><span class="gr-v">On software engineering and AI systems.</span></li>
         <li><span class="gr-k">Invited to speak at the regional AI Summit</span><span class="gr-v">Hosted by the Inland Empire / Desert Regional Consortium, March 2026.</span></li>
@@ -144,10 +163,10 @@
     <p class="eyebrow">Why MESA</p>
     <h2 class="big-statement" id="why-title"><img class="mesa-head" src="/assets/logos/mesa.png" alt="MESA"  loading="lazy" decoding="async"/> exists for these students.<br><span class="ink-muted"><span class="cch-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span> So does CC Hacks.</span></h2>
     <div class="why-body">
-      <p>MESA supports educationally and financially disadvantaged students to excel in STEM and transfer. A community-college-only hackathon puts those same students in front of a project, a mentor, and a network for a day.</p>
+      <p>MESA helps educationally and financially disadvantaged students excel in STEM and transfer. A community-college-only hackathon puts those same students in front of a project, a mentor, and a network for a day.</p>
       <p class="why-note">For your students, that means hands-on experience, a portfolio piece, and exposure to the Google developer community. Each one strengthens a transfer application.</p>
     </div>
-    <p class="why-thesis">The audiences are not similar.<br><span class="why-em">They are the same.</span></p>
+    <p class="why-thesis">Every student this is built for<br><span class="why-em">is already in your program.</span></p>
     <ul class="why-cards">
       <li><span class="why-k">For students</span><span class="why-v">A real project, mentors, and a network in one day.</span></li>
       <li><span class="why-k">For MESA</span><span class="why-v">A high-visibility STEM event, organized for you, not by you.</span></li>
@@ -156,10 +175,10 @@
   </section>
 
   <!-- THE FLOOR IS COVERED (de-risker) -->
-  <section class="section assurance" aria-labelledby="assurance-title">
-    <p class="eyebrow">What's already covered</p>
+  <section class="section assurance" id="either-way" aria-labelledby="assurance-title">
+    <p class="eyebrow">Our commitment</p>
     <h2 class="assurance-line" id="assurance-title">The event happens<br><span class="ok">either way.</span></h2>
-    <p class="section-lede assurance-sub">GDG @ RCC underwrites the floor, so your students get a real event regardless. Your involvement decides how big it gets, never whether it happens. There is no version of this where MESA signs on and nothing materializes.</p>
+    <p class="section-lede assurance-sub">GDG @ RCC commits to running the event and sizes it to the money we confirm, starting with a small, solid version we can already plan. Your involvement decides how big it gets, never whether it happens.</p>
   </section>
 
   <!-- HACKATHON 101 -->
@@ -167,7 +186,7 @@
     <div class="band-inner">
     <p class="eyebrow">New here? Start with this</p>
     <h2 class="section-title" id="hack-title">What's a hackathon?</h2>
-    <p class="hack-lead">It's an event where students team up and build something real: an app, a website, a small device, anything that goes from a blank screen to a working demo. Picture a science fair, but for building things, with mentors in the room the whole time and food on the table. At the end, every team shows what they made, and judges hand out prizes.</p>
+    <p class="hack-lead">It's an event where students team up and build something real: an app, a website, a small device, anything that goes from a blank screen to a working demo. Picture a science fair, but for building things, with mentors in the room the whole time and food on the table. At the end, every team shows what they made, and judges hand out prizes. (The students building are called hackers. Here that just means builders.)</p>
 
     <h3 class="hack-subhead"><span class="hack-subhead-mark" aria-hidden="true"></span>Questions coordinators usually ask</h3>
     <dl class="qa-grid">
@@ -184,10 +203,12 @@
     <p class="eyebrow">The event</p>
     <h2 class="section-title" id="event-title">CC Hacks, in brief</h2>
     <dl class="facts">
-      <div class="fact"><dt>Who it's for</dt><dd>Any community college student, or a recent grad from the last semester.</dd></div>
+      <div class="fact"><dt>Who it's for</dt><dd>Any community college student, or a recent grad from the last semester, including students who just transferred.</dd></div>
       <div class="fact"><dt>Who runs it</dt><dd><span class="fact-logos"><img class="gdg-logo" src="/assets/logos/gdg-rcc.svg" alt="GDG @ RCC, Riverside City College" loading="lazy" decoding="async" /></span>Part of Google Developer Groups, anchored in the Riverside Community College District (Riverside, Moreno Valley, Norco), and open to community colleges across SoCal.</dd></div>
       <div class="fact"><dt>Format</dt><dd>In-person. One focused day, or 24 hours with MLH.</dd></div>
       <div class="fact"><dt>Cost to attend</dt><dd>Free. Always.</dd></div>
+      <div class="fact"><dt>When</dt><dd>Date not set yet. We pick it with our partners once the venue is set, targeting the 2026&ndash;27 school year.</dd></div>
+      <div class="fact"><dt>Safety</dt><dd>Our commitments: a campus-approved venue, our faculty advisor on record, a code of conduct, signed waivers, and accommodations for any student who needs them.</dd></div>
     </dl>
   </section>
 
@@ -196,34 +217,34 @@
     <div class="colleges-inner">
       <p class="colleges-label">Anchored in the <b>Riverside Community College District</b></p>
       <div class="colleges-marks">
-        <img src="/assets/logos/rcc-white.png" alt="Riverside City College"  loading="lazy" decoding="async"/>
-        <img src="/assets/logos/mvc-white.png" alt="Moreno Valley College"  loading="lazy" decoding="async"/>
-        <img src="/assets/logos/norco-white.png" alt="Norco College"  loading="lazy" decoding="async"/>
+        <img src="/assets/logos/rcc-white.png" alt="Riverside City College" width="210" height="105" loading="lazy" decoding="async"/>
+        <img src="/assets/logos/mvc-white.png" alt="Moreno Valley College" width="210" height="105" loading="lazy" decoding="async"/>
+        <img src="/assets/logos/norco-white.png" alt="Norco College" width="521" height="160" loading="lazy" decoding="async"/>
       </div>
     </div>
   </section>
 
   <!-- REACH -->
   <section class="section reach" id="reach" aria-labelledby="reach-title">
-    <p class="eyebrow">Filling the room <span class="sep">/</span> reach</p>
+    <p class="eyebrow">Filling the room <span class="sep" aria-hidden="true">/</span> reach</p>
     <h2 class="section-title" id="reach-title">We're inviting community colleges across SoCal.</h2>
     <p class="section-lede">Not just the nearby campuses. Community colleges across the region, reached through local student ambassadors and campus clubs rather than ads alone.</p>
 
     <div class="reach-stats">
-      <div><span class="rs-num">56</span><span class="rs-label">colleges</span></div>
-      <div><span class="rs-num">8</span><span class="rs-label">counties</span></div>
-      <div><span class="rs-num">3</span><span class="rs-label">outreach tiers</span></div>
+      <div role="img" aria-label="56 colleges"><span class="rs-num" aria-hidden="true">56</span><span class="rs-label" aria-hidden="true">colleges</span></div>
+      <div role="img" aria-label="Zero dollars to attend"><span class="rs-num" aria-hidden="true">$0</span><span class="rs-label" aria-hidden="true">to attend</span></div>
+      <div role="img" aria-label="8 counties"><span class="rs-num" aria-hidden="true">8</span><span class="rs-label" aria-hidden="true">counties</span></div>
     </div>
 
     <div class="reach-strategy">
       <div class="rstrat"><span class="rstrat-k">Concentric reach</span><span class="rstrat-v">Start local in the Inland Empire, then expand outward by commuter range.</span></div>
       <div class="rstrat"><span class="rstrat-k">Campus ambassadors</span><span class="rstrat-v">A student rep at each college works their own clubs, group chats, and professors. That is how you get inside a campus.</span></div>
-      <div class="rstrat"><span class="rstrat-k">Every channel</span><span class="rstrat-v">Partner clubs, faculty and counselors, student government, and social, at every target campus.</span></div>
+      <div class="rstrat"><span class="rstrat-k">Every channel</span><span class="rstrat-v">Partner clubs, faculty and counselors, student government, and social media, at every target campus.</span></div>
     </div>
 
     <div class="roster">
       <div class="rtier rtier-a">
-        <h3 class="rtier-head"><i class="dot dot-blue"></i> Tier A <span class="sep">/</span> Inland Empire <span class="rtier-n">12</span></h3>
+        <h3 class="rtier-head"><i class="dot dot-blue"></i> Zone A <span class="sep" aria-hidden="true">/</span> Inland Empire <span class="rtier-n">12</span></h3>
         <ul class="reach-list">
           <li>Riverside City College</li><li>Moreno Valley College</li><li>Norco College</li>
           <li>Mt. San Jacinto College</li><li>College of the Desert</li><li>Palo Verde College</li>
@@ -232,8 +253,10 @@
         </ul>
       </div>
       <div class="rtier rtier-b">
-        <h3 class="rtier-head"><i class="dot dot-green"></i> Tier B <span class="sep">/</span> LA + Orange County <span class="rtier-n">30</span></h3>
-        <ul class="reach-list">
+        <h3 class="rtier-head"><i class="dot dot-green"></i> Zone B <span class="sep" aria-hidden="true">/</span> LA + Orange County <span class="rtier-n">30</span></h3>
+        <details class="rtier-details">
+          <summary><span class="rtier-toggle"><span class="show-when-closed">Show all 30 +</span><span class="show-when-open">Hide the list &minus;</span></span></summary>
+          <ul class="reach-list">
           <li>Mt. San Antonio College</li><li>Citrus College</li><li>Pasadena City College</li>
           <li>Rio Hondo College</li><li>Cerritos College</li><li>Compton College</li>
           <li>El Camino College</li><li>Long Beach City College</li><li>Santa Monica College</li>
@@ -244,21 +267,25 @@
           <li>Fullerton College</li><li>Cypress College</li><li>Santiago Canyon College</li>
           <li>Santa Ana College</li><li>Saddleback College</li><li>Irvine Valley College</li>
           <li>Orange Coast College</li><li>Golden West College</li><li>Coastline College</li>
-        </ul>
+          </ul>
+        </details>
       </div>
       <div class="rtier rtier-c">
-        <h3 class="rtier-head"><i class="dot dot-amber"></i> Tier C <span class="sep">/</span> San Diego, Imperial, Ventura, Santa Barbara <span class="rtier-n">14</span></h3>
-        <ul class="reach-list">
+        <h3 class="rtier-head"><i class="dot dot-red"></i> Zone C <span class="sep" aria-hidden="true">/</span> San Diego, Imperial, Ventura, Santa Barbara <span class="rtier-n">14</span></h3>
+        <details class="rtier-details">
+          <summary><span class="rtier-toggle"><span class="show-when-closed">Show all 14 +</span><span class="show-when-open">Hide the list &minus;</span></span></summary>
+          <ul class="reach-list">
           <li>San Diego City College</li><li>San Diego Mesa College</li><li>San Diego Miramar College</li>
           <li>Grossmont College</li><li>Cuyamaca College</li><li>Palomar College</li>
           <li>MiraCosta College</li><li>Southwestern College</li><li>Imperial Valley College</li>
           <li>Ventura College</li><li>Moorpark College</li><li>Oxnard College</li>
           <li>Santa Barbara City College</li><li>Allan Hancock College</li>
-        </ul>
+          </ul>
+        </details>
       </div>
     </div>
     <div class="reach-foot-row">
-      <img src="/assets/logos/ccc.png" alt="California Community Colleges"  loading="lazy" decoding="async"/>
+      <img src="/assets/logos/ccc.png" alt="California Community Colleges" width="320" height="259" loading="lazy" decoding="async"/>
       <p class="reach-foot">Drawn from the official California Community Colleges directory.</p>
     </div>
   </section>
@@ -266,35 +293,35 @@
   <!-- TWO WAYS TO RUN IT -->
   <section class="section formats" id="formats" aria-labelledby="formats-title">
     <p class="eyebrow">Two ways to run it</p>
-    <h2 class="section-title" id="formats-title">One focused day, or a full 24 with MLH.</h2>
-    <p class="section-lede">Both are real plans, not a default and a maybe. We can run a strong single day ourselves, or go a full 24 hours with MLH, the official student hackathon league, as a partner.</p>
+    <h2 class="section-title" id="formats-title">One focused day, or a full 24 hours with MLH.</h2>
+    <p class="section-lede">Both are real plans, weighed equally. We can run a strong single day ourselves, or go a full 24 hours with MLH, the official student hackathon league, as a partner. We are applying to MLH for the 2026&ndash;27 season.</p>
 
     <div class="fmt-grid">
       <article class="fmt-col">
-        <p class="fmt-tag"><i class="dot dot-green"></i> Self-run <span class="sep">/</span> about 9 hours</p>
+        <p class="fmt-tag"><i class="dot dot-green"></i> Self-run <span class="sep" aria-hidden="true">/</span> about 9 hours</p>
         <h3 class="fmt-name">One day</h3>
         <p class="fmt-line">A complete hackathon between breakfast and dinner. Lower lift, lower cost, and a strong first event we run end to end.</p>
         <ol class="vtimeline" aria-label="One-day schedule">
-          <li class="vstop vstop-blue"><span class="vstop-time">9:00 AM</span><span class="vstop-title">Kickoff</span><span class="vstop-desc">Doors open, breakfast, and the theme drops.</span></li>
-          <li class="vstop vstop-red"><span class="vstop-time">9:30 AM</span><span class="vstop-title">Team up</span><span class="vstop-desc">Teams of up to four. Came alone? We help you find a group.</span></li>
-          <li class="vstop vstop-amber"><span class="vstop-time">10:00 AM</span><span class="vstop-title">Build</span><span class="vstop-desc">Mentors and quick workshops on tap all day.</span></li>
-          <li class="vstop vstop-green"><span class="vstop-time">4:30 PM</span><span class="vstop-title">Demo</span><span class="vstop-desc">Teams show their project at a science-fair-style expo.</span></li>
-          <li class="vstop vstop-blue"><span class="vstop-time">6:00 PM</span><span class="vstop-title">Awards</span><span class="vstop-desc">Judges pick favorites. Everyone leaves with a project.</span></li>
+          <li class="vstop"><span class="vstop-time">9:00 AM</span><span class="vstop-title">Kickoff</span><span class="vstop-desc">Doors open, breakfast, and the theme drops.</span></li>
+          <li class="vstop"><span class="vstop-time">9:30 AM</span><span class="vstop-title">Team up</span><span class="vstop-desc">Teams of up to four. Came alone? We help you find a group.</span></li>
+          <li class="vstop"><span class="vstop-time">10:00 AM</span><span class="vstop-title">Build</span><span class="vstop-desc">Mentors and quick workshops on tap all day.</span></li>
+          <li class="vstop"><span class="vstop-time">4:30 PM</span><span class="vstop-title">Demo</span><span class="vstop-desc">Teams show their project at a science-fair-style expo.</span></li>
+          <li class="vstop"><span class="vstop-time">6:00 PM</span><span class="vstop-title">Awards</span><span class="vstop-desc">Judges pick favorites. Everyone leaves with a project.</span></li>
         </ol>
         <p class="fmt-best"><span>Best for</span> a strong, low-risk first year.</p>
       </article>
 
       <article class="fmt-col fmt-col-mlh">
-        <p class="fmt-tag"><img class="fmt-mlh" src="/assets/logos/mlh.svg" alt="MLH"  loading="lazy" decoding="async"/> <span class="sep">/</span> 24 hours, overnight</p>
+        <p class="fmt-tag"><img class="fmt-mlh" src="/assets/logos/mlh.svg" alt="MLH"  loading="lazy" decoding="async"/> <span class="sep" aria-hidden="true">/</span> 24 hours, overnight</p>
         <h3 class="fmt-name">24 hours</h3>
         <p class="fmt-line">A full overnight build, backed by MLH's platform, mentor network, swag, and national credibility. The bigger stage.</p>
         <ol class="vtimeline" aria-label="24-hour schedule with MLH">
-          <li class="vstop vstop-blue"><span class="vstop-time">Sat 10:00 AM</span><span class="vstop-title">Opening ceremony</span><span class="vstop-desc">MLH welcome, theme reveal, and team formation.</span></li>
-          <li class="vstop vstop-red"><span class="vstop-time">Sat 11:00 AM</span><span class="vstop-title">Build begins</span><span class="vstop-desc">Mentors roam; MLH and sponsor workshops run all afternoon.</span></li>
-          <li class="vstop vstop-amber"><span class="vstop-time">Sat 7:00 PM</span><span class="vstop-title">Dinner + mini-events</span><span class="vstop-desc">Food, games, and a breather with the whole room.</span></li>
-          <li class="vstop vstop-green"><span class="vstop-time">Overnight</span><span class="vstop-title">Hack through the night</span><span class="vstop-desc">A quiet space, snacks, and momentum. Build while it's fresh.</span></li>
-          <li class="vstop vstop-red"><span class="vstop-time">Sun 10:00 AM</span><span class="vstop-title">Submit + demo</span><span class="vstop-desc">Projects go in, and teams demo at the expo.</span></li>
-          <li class="vstop vstop-blue"><span class="vstop-time">Sun 12:30 PM</span><span class="vstop-title">Closing + awards</span><span class="vstop-desc">Judging wraps and prizes go out, MLH pins included.</span></li>
+          <li class="vstop"><span class="vstop-time">Sat 10:00 AM</span><span class="vstop-title">Opening ceremony</span><span class="vstop-desc">MLH welcome, theme reveal, and team formation.</span></li>
+          <li class="vstop"><span class="vstop-time">Sat 11:00 AM</span><span class="vstop-title">Build begins</span><span class="vstop-desc">Mentors roam; MLH and sponsor workshops run all afternoon.</span></li>
+          <li class="vstop"><span class="vstop-time">Sat 7:00 PM</span><span class="vstop-title">Dinner + mini-events</span><span class="vstop-desc">Food, games, and a breather with the whole room.</span></li>
+          <li class="vstop"><span class="vstop-time">Overnight</span><span class="vstop-title">Hack through the night</span><span class="vstop-desc">A quiet space, snacks, and momentum. Staying is optional, students can leave and come back, and organizers staff the venue all night.</span></li>
+          <li class="vstop"><span class="vstop-time">Sun 10:00 AM</span><span class="vstop-title">Submit + demo</span><span class="vstop-desc">Projects go in, and teams demo at the expo.</span></li>
+          <li class="vstop"><span class="vstop-time">Sun 12:30 PM</span><span class="vstop-title">Closing + awards</span><span class="vstop-desc">Judging wraps and prizes go out, MLH pins included.</span></li>
         </ol>
         <p class="fmt-best"><span>Best for</span> maximum scale, resources, and reach.</p>
       </article>
@@ -313,7 +340,7 @@
         <li><span class="mb-k">A safety net</span><span class="mb-v">A vetted code of conduct and an incidents team on call.</span></li>
         <li><span class="mb-k">A path to sponsors</span><span class="mb-v">A door into MLH's network of corporate sponsors.</span></li>
       </ul>
-      <p class="mlh-status">We're applying for MLH Member Event status for the 2026–27 season.</p>
+      <p class="mlh-status">These benefits come with acceptance. The one-day plan stands on its own if the answer is no.</p>
     </div>
   </section>
 
@@ -332,7 +359,7 @@
     <h3 class="hack-subhead"><span class="hack-subhead-mark" aria-hidden="true"></span>Category tracks (opt-in)</h3>
     <div class="track-cards">
       <div class="tcard tcard-google">
-        <span class="tcard-tag"><i class="dot dot-blue"></i> Confirmed sponsor</span>
+        <span class="tcard-tag"><i class="dot dot-blue"></i> Confirmed in-kind sponsor</span>
         <h4 class="tcard-name"><img class="tcard-glogo" src="/assets/logos/google-g.svg" alt="" aria-hidden="true"  loading="lazy" decoding="async"/> Google track</h4>
         <p class="tcard-desc">Best use of Google technology, like Gemini, Firebase, or Maps.</p>
         <span class="tcard-products"><img src="/assets/logos/gemini.svg" alt="Gemini"  loading="lazy" decoding="async"/><img src="/assets/logos/firebase.svg" alt="Firebase"  loading="lazy" decoding="async"/></span>
@@ -348,7 +375,7 @@
         <p class="tcard-desc">A project that helps people learn or makes school work better.</p>
       </div>
       <div class="tcard">
-        <span class="tcard-tag"><i class="dot dot-amber"></i> Your branch</span>
+        <span class="tcard-tag"><i class="dot dot-amber"></i> Your program</span>
         <h4 class="tcard-name">MESA tracks</h4>
         <p class="tcard-desc">RCC and MVC MESA can each run a track for their own students. <a href="#involvement">See involvement &rarr;</a></p>
       </div>
@@ -356,17 +383,18 @@
 
     <h3 class="hack-subhead"><span class="hack-subhead-mark" aria-hidden="true"></span>One project, many tracks</h3>
     <p class="matrix-intro">A team builds one project, and it can compete across several tracks at once. These are only examples. The real topics are up to the students.</p>
-    <div class="matrix-wrap">
+    <p class="matrix-hint" aria-hidden="true">Swipe sideways to see every track &rarr;</p>
+    <div class="matrix-wrap" tabindex="0" role="region" aria-label="Example projects and the tracks each can enter">
       <table class="track-matrix">
         <thead>
           <tr><th scope="col">Example project</th><th scope="col">Overall</th><th scope="col">Google</th><th scope="col">Social Impact</th><th scope="col">Education Impact</th></tr>
         </thead>
         <tbody>
-          <tr><th scope="row">A finder for free food on campus</th><td class="yes"></td><td class="yes"></td><td class="yes"></td><td></td></tr>
-          <tr><th scope="row">A tutor chatbot for intro chemistry</th><td class="yes"></td><td class="yes"></td><td></td><td class="yes"></td></tr>
-          <tr><th scope="row">A bus-route mapper for transit deserts</th><td class="yes"></td><td class="yes"></td><td class="yes"></td><td></td></tr>
-          <tr><th scope="row">A game that teaches kids to code</th><td class="yes"></td><td></td><td></td><td class="yes"></td></tr>
-          <tr><th scope="row">A wildfire-alert app for rural towns</th><td class="yes"></td><td></td><td class="yes"></td><td></td></tr>
+          <tr><th scope="row">A finder for free food on campus</th><td class="yes"><span class="sr-only">Yes</span></td><td class="yes"><span class="sr-only">Yes</span></td><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td></tr>
+          <tr><th scope="row">A tutor chatbot for intro chemistry</th><td class="yes"><span class="sr-only">Yes</span></td><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td><td class="yes"><span class="sr-only">Yes</span></td></tr>
+          <tr><th scope="row">A bus-route mapper for transit deserts</th><td class="yes"><span class="sr-only">Yes</span></td><td class="yes"><span class="sr-only">Yes</span></td><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td></tr>
+          <tr><th scope="row">A game that teaches kids to code</th><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td><td><span class="sr-only">No</span></td><td class="yes"><span class="sr-only">Yes</span></td></tr>
+          <tr><th scope="row">A wildfire-alert app for rural towns</th><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td><td class="yes"><span class="sr-only">Yes</span></td><td><span class="sr-only">No</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -375,18 +403,18 @@
 
   <!-- SCOPE TIERS (signature) -->
   <section class="section scope" id="scope" aria-labelledby="scope-title">
-    <p class="eyebrow">The plan scales <span class="sep">/</span> scope tiers</p>
+    <p class="eyebrow">The plan scales <span class="sep" aria-hidden="true">/</span> scope tiers</p>
     <h2 class="section-title" id="scope-title">We commit to a floor. We scale with funding.</h2>
-    <p class="section-lede">Move the dial. The event grows with what we raise together, and the floor is already covered.</p>
+    <p class="section-lede">Move the dial. We commit to the smallest tier first, and the event grows with what we raise together.</p>
 
     <div class="dial" role="tablist" aria-label="Scope tiers">
-      <button class="dial-btn is-active" data-tier="0" role="tab" aria-selected="true" id="tab-0">
+      <button class="dial-btn" data-tier="0" role="tab" aria-selected="false" aria-controls="tier-panel-0" id="tab-0" tabindex="-1">
         <span class="dial-no">Tier 1</span><span class="dial-name">Foundation</span>
       </button>
-      <button class="dial-btn" data-tier="1" role="tab" aria-selected="false" id="tab-1">
+      <button class="dial-btn is-active" data-tier="1" role="tab" aria-selected="true" aria-controls="tier-panel-1" id="tab-1">
         <span class="dial-no">Tier 2</span><span class="dial-name">Standard</span>
       </button>
-      <button class="dial-btn" data-tier="2" role="tab" aria-selected="false" id="tab-2">
+      <button class="dial-btn" data-tier="2" role="tab" aria-selected="false" aria-controls="tier-panel-2" id="tab-2" tabindex="-1">
         <span class="dial-no">Tier 3</span><span class="dial-name">Flagship</span>
       </button>
       <span class="dial-track" aria-hidden="true"><span class="dial-thumb" id="dial-thumb"></span></span>
@@ -398,7 +426,7 @@
         <div class="tier-head">
           <div>
             <p class="tier-posture">The smallest strong event</p>
-            <p class="tier-funded">Underwritten by the GDG supplement on its own.</p>
+            <p class="tier-funded">Sized to run on the GDG supplement alone.</p>
           </div>
           <div class="tier-count">
             <span class="tier-count-num">25–50</span>
@@ -408,7 +436,7 @@
         <dl class="tier-specs">
           <div class="spec"><dt>Venue</dt><dd>One campus room</dd></div>
           <div class="spec"><dt>Food</dt><dd>Snacks and a meal</dd></div>
-          <div class="spec"><dt>Prizes</dt><dd>Modest, swag and gift cards</dd></div>
+          <div class="spec"><dt>Prizes</dt><dd>Modest: swag and gift cards</dd></div>
           <div class="spec"><dt>Programming</dt><dd>Kickoff and judging</dd></div>
         </dl>
       </div>
@@ -464,28 +492,28 @@
       <p class="anchor-label">The anchor</p>
       <p class="anchor-amount"><span class="anchor-up">up to</span> $10,000</p>
       <p class="anchor-who">GDG @ RCC supplement</p>
-      <p class="anchor-tag">pending ASRCC budget allocation</p>
+      <p class="anchor-tag">pending allocation by ASRCC, RCC's student government</p>
     </div>
 
     <ul class="fund-list">
-      <li><span class="fund-k">Sponsorships</span><span class="fund-v">Outreach in progress. The main lever between Standard and Flagship.</span></li>
+      <li><span class="fund-k">Sponsorships</span><span class="fund-v">Outreach in preparation. The main lever between Standard and Flagship.</span></li>
       <li><span class="fund-k">Partner &amp; MESA contributions</span><span class="fund-v">Optional, and only if a level calls for it.</span></li>
       <li><span class="fund-k">College / student-gov funding</span><span class="fund-v">ASRCC equivalents at partner colleges.</span></li>
     </ul>
-    <p class="fund-foot">The GDG supplement guarantees a real event. Sponsorships and partners decide how big it gets.</p>
+    <p class="fund-foot">We size the event to confirmed money, floor first. Sponsorships and partners decide how big it gets.</p>
   </section>
 
   <!-- INVOLVEMENT -->
   <section class="section involvement" id="involvement" aria-labelledby="inv-title">
-    <p class="eyebrow">Your involvement <span class="sep">/</span> you choose</p>
+    <p class="eyebrow">Your involvement <span class="sep" aria-hidden="true">/</span> you choose</p>
     <h2 class="section-title" id="inv-title">Pick the level that fits.</h2>
-    <p class="section-lede">RCC MESA and MVC MESA can choose different levels. Tap a card to try one on. Nothing here is all-or-nothing.</p>
+    <p class="section-lede">Each MESA program chooses its own level, and RCC and MVC can differ. Choose a level to try it on. Nothing here is all-or-nothing.</p>
 
     <div class="levels" role="group" aria-label="Involvement levels">
       <button class="level level-blue" data-level aria-pressed="false">
         <span class="level-top"><span class="level-no">Level 1</span><span class="level-name">Supporter</span></span>
         <div class="level-row"><span class="level-label">You commit</span><span class="level-text">Promote the event to your students, and give us a point of contact.</span></div>
-        <div class="level-row"><span class="level-label">You get</span><span class="level-text">Logo as a supporter, credit at the event, and direct access to your students.</span></div>
+        <div class="level-row"><span class="level-label">You get</span><span class="level-text">Logo as a supporter, credit at the event, and a post-event count of your students who took part.</span></div>
         <span class="level-pick">Choose Supporter</span>
       </button>
 
@@ -498,7 +526,7 @@
 
       <button class="level level-red" data-level aria-pressed="false">
         <span class="level-top"><span class="level-no">Level 3</span><span class="level-name">Co-organizer</span></span>
-        <div class="level-row"><span class="level-label">You commit</span><span class="level-text">Shared planning, a funding or in-kind contribution, co-branding, judges, and possibly host space.</span></div>
+        <div class="level-row"><span class="level-label">You commit</span><span class="level-text">Shared planning, co-branding, and judges. Plus a funding or in-kind contribution, sized with us, and possibly host space.</span></div>
         <div class="level-row"><span class="level-label">You get</span><span class="level-text">Co-host status, lead logo placement, a hand in shaping tracks and judging, and outcome reporting.</span></div>
         <span class="level-pick">Choose Co-organizer</span>
       </button>
@@ -509,10 +537,10 @@
       <span class="brand-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <p class="mt-label">An optional MESA exclusive</p>
       <h3 class="mt-title">Run your own MESA track.</h3>
-      <p class="mt-body">Either branch can sponsor a private prize track for its own students. Any team where the majority of members are in your MESA program competes for a cash prize your branch puts up. It is a built-in reason for your students to show up, and a spotlight that is yours alone. RCC MESA and MVC MESA can each run their own.</p>
+      <p class="mt-body">Either MESA program can sponsor a private prize track for its own students. Any team where the majority of members are in your program competes for a cash prize your program puts up. It is a built-in reason for your students to show up, and a spotlight that is yours alone. Optional in every sense: the event never depends on it.</p>
       <dl class="mt-specs">
         <div><dt>Who qualifies</dt><dd>Teams that are majority MESA students</dd></div>
-        <div><dt>The prize</dt><dd>Cash, in an amount your branch sets</dd></div>
+        <div><dt>The prize</dt><dd>Cash, in an amount your program sets</dd></div>
         <div><dt>The credit</dt><dd>Your name on the track, your students in the running</dd></div>
       </dl>
     </div>
@@ -529,8 +557,21 @@
     </ol>
     <div class="ask-cta">
       <p class="ask-cta-line">Worst case, you spend twenty minutes and pass. Best case, your students get a stage they have never had.</p>
-      <a class="btn-mail" href="mailto:samuelgerungan@gmail.com?subject=CC%20Hacks%20%C3%97%20MESA">Start the conversation <span aria-hidden="true">→</span></a>
-      <p class="ask-contact">Samuel Gerungan <span class="sep">/</span> GDG @ RCC</p>
+      <a class="btn-mail" id="ask-mail" href="mailto:samuelgerungan@gmail.com?subject=CC%20Hacks%20%C3%97%20MESA">
+        <span class="btn-mail-face btn-mail-start">Start the conversation <span aria-hidden="true">→</span></span>
+        <span class="btn-mail-face btn-mail-done" aria-hidden="true"><span class="btn-mail-check">✓</span> Copied</span>
+      </a>
+      <div class="ask-reveal" id="ask-reveal">
+        <div class="ask-reveal-inner">
+          <p class="ask-reveal-kicker">Email us here</p>
+          <p class="ask-reveal-email">samuelgerungan@gmail.com</p>
+          <p class="ask-reveal-note"><span id="ask-reveal-lead">It's on your clipboard. Paste it into a new email and say hi.</span> <a id="ask-mail-app-2" class="ask-reveal-applink" href="mailto:samuelgerungan@gmail.com?subject=CC%20Hacks%20%C3%97%20MESA">Or open your mail app <span aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+      <p class="ask-mail-status sr-only" id="ask-mail-status" aria-live="polite"></p>
+      <p class="ask-mail-app"><a id="ask-mail-app" href="mailto:samuelgerungan@gmail.com?subject=CC%20Hacks%20%C3%97%20MESA">Or open it in your mail app <span aria-hidden="true">→</span></a></p>
+      <p class="ask-contact">Samuel Gerungan <span class="sep" aria-hidden="true">/</span> Lead organizer, GDG @ RCC <span class="sep" aria-hidden="true">/</span> <span class="ask-email">samuelgerungan@gmail.com</span></p>
+      <p class="ask-alt">Not a fit right now? No problem. CC Hacks stays open to your students either way.</p>
     </div>
   </section>
 
@@ -543,12 +584,12 @@
   </div>
   <div class="footer-partners">
     <div class="fp"><span class="fp-label">Organized by</span><img class="gdg-logo" src="/assets/logos/gdg-rcc.svg" alt="GDG @ RCC, Riverside City College" loading="lazy" decoding="async" /></div>
-    <div class="fp"><span class="fp-label">Sponsor</span><img class="brand-logo" src="/assets/logos/google.svg" alt="Google"  loading="lazy" decoding="async"/></div>
+    <div class="fp"><span class="fp-label">Sponsor, in-kind</span><img class="brand-logo" src="/assets/logos/google.svg" alt="Google"  loading="lazy" decoding="async"/></div>
     <div class="fp"><span class="fp-label">Proposed partner</span><img class="brand-logo" src="/assets/logos/mesa.png" alt="MESA"  loading="lazy" decoding="async"/></div>
     <div class="fp"><span class="fp-label">Applying to</span><img class="brand-logo" src="/assets/logos/mlh.svg" alt="Major League Hacking"  loading="lazy" decoding="async"/></div>
   </div>
+  <p class="footer-fine">Working proposal. Attendance figures are targets, not commitments. The GDG supplement is pending ASRCC approval.</p>
   <p class="footer-note">A GDG @ RCC event, built for community college students.</p>
-  <p class="footer-fine">Draft proposal. Attendance figures are targets, not commitments. The GDG supplement is pending ASRCC approval.</p>
 </footer>
 
 <script type="module" src="/src/main.ts"></script>

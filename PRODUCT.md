@@ -16,17 +16,18 @@ event's public landing page and the website MLH Member Events require.
 
 ## The page's job
 
-Convince MESA to partner: explain what a hackathon is, establish who's behind it (the student-led
-GDG @ RCC chapter), show why it fits their students, lay out how they plug in (involvement levels,
-their own MESA track), and prove it is a real, regional, funded event.
+Earn a first conversation with MESA: explain what a hackathon is, establish who's behind it (the
+student-led GDG @ RCC chapter), show why it fits their students, lay out how they plug in
+(involvement levels, their own MESA track), and be straight about what is confirmed versus pending.
 
 ## Flow (current order)
 
-Ordered to lead with who/why before operational detail, group the proof, and put the participation
-ask beside the close:
+Leads with credibility, peaks on the thesis, removes the risk early, proves execution, and closes
+small:
 
-Hero → Hackathon 101 → Who's behind this (GDG @ RCC) → Why MESA → The event → Anchor colleges →
-Reach → Formats → Tracks & prizes → Scope tiers → Funding → Your involvement → The ask.
+Hero → Who's behind this (GDG @ RCC) → Why MESA → The event happens either way (de-risker) →
+Hackathon 101 → The event → Anchor colleges → Reach → Formats → Tracks & prizes → Scope tiers →
+Funding → Your involvement → The ask.
 
 ## Lane
 

@@ -25,6 +25,10 @@
   --green-ink: #188038;
   --red-ink: #C5221F;
 
+  /* Podium medal accents (borders only; place numbers stay ink for AA) */
+  --silver: #80868b;
+  --bronze: #a05f2c;
+
   --maxw: 1120px;
   --pad: clamp(1.25rem, 4vw, 4rem);
   --sec-y: clamp(5rem, 10vw, 9rem);
@@ -38,7 +42,12 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* scroll-padding-top is the ONE source of the 88px sticky-nav clearance: the native
+   anchor path reads it, and Lenis subtracts it in scrollTo (so no JS offset, and no
+   scroll-margin-top on sections, or the clearance stacks). Native smooth scrolling is
+   scoped to non-motion; under Lenis it would fight the animated scroll. */
+html { scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
+html:not(.motion) { scroll-behavior: smooth; }
 
 body {
   background: var(--paper);
@@ -61,6 +70,14 @@ a { color: inherit; }
 }
 .skip-link:focus { left: 0; }
 
+/* Screen-reader-only text (e.g. the yes/no state of track-matrix cells) */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.nowrap { white-space: nowrap; }
+
 :focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
@@ -69,7 +86,6 @@ a { color: inherit; }
 
 /* ---------- Polish ---------- */
 ::selection { background: color-mix(in srgb, var(--amber) 38%, transparent); color: var(--ink); }
-section[id], .hero { scroll-margin-top: 88px; }
 .hero-title, .section-title, .big-statement, .mt-title, .fmt-name, .tcard-name, .hack-subhead, .anchor-who { text-wrap: balance; }
 .hero-sub, .section-lede, .hack-lead, .mt-body, .matrix-intro, .rstrat-v, .tcard-desc, .why-body p { text-wrap: pretty; }
 .hero-title, .section-title, .big-statement, .rs-num, .pod-place, .anchor-amount, .tier-count-num, .fmt-name { font-optical-sizing: auto; }
@@ -94,23 +110,54 @@ section[id], .hero { scroll-margin-top: 88px; }
   border-bottom: 1px solid var(--line-soft);
 }
 .nav-links { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.75rem); }
-.nav-links a {
+.nav-links > a {
   font-family: var(--f-mono); font-size: .8rem; text-decoration: none; color: var(--ink-soft);
   letter-spacing: .01em; transition: color .2s ease;
 }
-.nav-links a:hover { color: var(--ink); }
-.nav-links a:not(.nav-cta) { position: relative; }
-.nav-links a:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: currentColor; border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
-.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
+.nav-links > a:hover { color: var(--ink); }
+.nav-links > a:not(.nav-cta) { position: relative; }
+.nav-links > a:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: currentColor; border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
+.nav-links > a:not(.nav-cta):hover::after { transform: scaleX(1); }
 .nav-cta {
   background: var(--ink); color: var(--paper) !important; padding: .5rem .85rem; border-radius: 999px;
 }
-.nav-cta:hover { background: var(--blue); }
+.nav-cta:hover { background: var(--blue-ink); }
 @media (max-width: 680px) {
-  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-links > a:not(.nav-cta) { display: none; }
   /* Drop the blur on mobile: a sticky backdrop-filter repaints on every scroll frame
-     (and iOS never applied it without the -webkit- prefix anyway). Use a near-opaque bg. */
-  .nav { backdrop-filter: none; background: color-mix(in srgb, var(--paper) 96%, transparent); }
+     (and iOS never applied it without the -webkit- prefix anyway). Fully opaque so page
+     text never ghosts through behind the bar. */
+  .nav { backdrop-filter: none; background: var(--paper); }
+}
+
+/* Mobile section menu: native disclosure, no JS required. Hidden on desktop where the
+   inline nav links carry wayfinding. */
+.nav-menu { display: none; position: relative; }
+.nav-menu summary {
+  list-style: none; cursor: pointer;
+  font-family: var(--f-mono); font-size: .8rem; color: var(--ink-soft);
+  border: 1px solid var(--line); border-radius: 999px; padding: .45rem .8rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+}
+.nav-menu summary::-webkit-details-marker { display: none; }
+.nav-menu summary::after { content: "+"; content: "+" / ""; font-weight: 700; }
+.nav-menu[open] summary::after { content: "\2212"; content: "\2212" / ""; }
+.nav-menu-panel {
+  position: absolute; right: 0; top: calc(100% + .6rem); z-index: 60;
+  min-width: 13rem; background: var(--paper); border: 1px solid var(--line);
+  border-radius: 12px; padding: .5rem; box-shadow: 0 18px 40px -22px rgba(23,22,29,.35);
+  display: flex; flex-direction: column;
+}
+.nav-menu-panel a {
+  font-family: var(--f-mono); font-size: .85rem; text-decoration: none;
+  color: var(--ink-soft); padding: .55rem .65rem; border-radius: 8px;
+}
+.nav-menu-panel a:hover { background: var(--paper-2); color: var(--ink); }
+@media (max-width: 680px) {
+  .nav-menu { display: block; }
+  /* 44px tap targets on the small-screen controls */
+  .nav-menu summary, .nav-cta { min-height: 44px; display: inline-flex; align-items: center; }
+  .nav-menu-panel a { min-height: 44px; display: flex; align-items: center; }
 }
 
 /* ---------- Shared section frame ---------- */
@@ -250,7 +297,7 @@ section[id], .hero { scroll-margin-top: 88px; }
 .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .fact { background: var(--paper); padding: 1.75rem; }
 .fact dt { font-family: var(--f-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: .55rem; }
-.fact dd { font-family: var(--f-display); font-weight: 600; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.15; letter-spacing: -.02em; }
+.fact dd { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.15; letter-spacing: -.02em; }
 @media (max-width: 620px) { .facts { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -300,7 +347,10 @@ section[id], .hero { scroll-margin-top: 88px; }
 /* ============================================================
    SCOPE TIERS — signature dial
    ============================================================ */
-.scope { --tc: var(--blue); }
+/* --tc is the tier's vivid hue (big display digits, borders); --tc-fill is the deepened
+   variant used wherever paper text sits on the color (the dial thumb), for AA contrast.
+   Defaults match the shipped Tier-2 markup so a failed JS bundle shows a coherent state. */
+.scope { --tc: var(--green); --tc-fill: var(--green-ink); }
 .dial {
   position: relative; display: grid; grid-template-columns: repeat(3, 1fr);
   background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px;
@@ -315,13 +365,14 @@ section[id], .hero { scroll-margin-top: 88px; }
 .dial-no { font-family: var(--f-mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; opacity: .75; }
 .dial-name { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; }
 .dial-btn.is-active { color: var(--paper); }
+.dial-btn.is-active .dial-no { opacity: 1; }
 .dial-track { position: absolute; inset: 6px; z-index: 1; pointer-events: none; }
 .dial-thumb {
   position: absolute; top: 0; left: 0; height: 100%; width: calc(100% / 3);
-  background: var(--tc); border-radius: 999px;
-  transform: translateX(0);
+  background: var(--tc-fill); border-radius: 999px;
+  transform: translateX(100%);
   transition: transform .4s cubic-bezier(.22,.8,.28,1), background .4s ease;
-  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--tc) 80%, transparent);
+  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--tc-fill) 80%, transparent);
 }
 
 .tier-panels { display: grid; gap: 1rem; }
@@ -362,9 +413,10 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
    ============================================================ */
 .podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 3rem; }
 .pod { background: var(--card); border: 1px solid var(--line); border-top: 5px solid var(--muted); border-radius: var(--radius); padding: 1.5rem; }
-.pod-1 { border-top-color: var(--amber); } .pod-2 { border-top-color: #9aa0a6; } .pod-3 { border-top-color: #b07a3c; }
-.pod-place { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.03em; line-height: 1; display: block; }
-.pod-1 .pod-place { color: var(--amber); } .pod-2 .pod-place { color: #80868b; } .pod-3 .pod-place { color: #b07a3c; }
+.pod-1 { border-top-color: var(--amber); } .pod-2 { border-top-color: var(--silver); } .pod-3 { border-top-color: var(--bronze); }
+/* Medal color lives in the top border only: amber never appears as text on white, and
+   the place numbers stay ink for AA contrast. */
+.pod-place { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.03em; line-height: 1; display: block; color: var(--ink); }
 .pod-label { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-top: .5rem; display: block; }
 
 .track-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
@@ -372,16 +424,21 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .tcard-tag { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); display: flex; align-items: center; gap: .4rem; }
 .tcard-name { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.02em; }
 .tcard-desc { font-size: .92rem; color: var(--ink-soft); line-height: 1.45; }
-.tcard-desc a { color: var(--blue); text-decoration: none; font-weight: 600; white-space: nowrap; }
+.tcard-desc a { color: var(--blue-ink); text-decoration: none; font-weight: 600; white-space: nowrap; }
 
 .matrix-intro { color: var(--ink-soft); max-width: 62ch; margin-bottom: 1.5rem; }
 .matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.matrix-wrap:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+.matrix-hint { display: none; font-family: var(--f-mono); font-size: .78rem; color: var(--muted); margin-bottom: .5rem; }
+@media (max-width: 620px) { .matrix-hint { display: block; } }
 .track-matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .track-matrix th, .track-matrix td { padding: .85rem 1rem; text-align: center; border-bottom: 1px solid var(--line); }
 .track-matrix thead th { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 700; }
 .track-matrix thead th:first-child, .track-matrix tbody th { text-align: left; }
 .track-matrix tbody th { font-family: var(--f-body); font-weight: 600; font-size: .98rem; color: var(--ink); }
-.track-matrix td.yes::after { content: "\2713"; color: var(--green-ink); font-weight: 700; font-size: 1.15rem; }
+/* Visual checkmark only; the cell state is announced by the sr-only Yes/No text in the
+   markup, so the glyph carries empty alt text where supported. */
+.track-matrix td.yes::after { content: "\2713"; content: "\2713" / ""; color: var(--green-ink); font-weight: 700; font-size: 1.15rem; }
 .tracks-foot { margin-top: 1.75rem; font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
 @media (max-width: 820px) { .track-cards { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .track-cards { grid-template-columns: 1fr; } }
@@ -391,7 +448,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
    ============================================================ */
 .reach-stats { display: flex; flex-wrap: wrap; gap: clamp(2rem, 6vw, 5rem); margin-bottom: 3rem; }
 .reach-stats > div { display: flex; flex-direction: column; }
-.rs-num { font-family: var(--f-display); font-weight: 800; font-size: clamp(3rem, 8vw, 5rem); line-height: .9; letter-spacing: -.04em; }
+.rs-num { font-family: var(--f-display); font-weight: 800; font-size: clamp(3rem, 8vw, 5rem); line-height: .9; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .rs-label { font-family: var(--f-mono); font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: .5rem; }
 .reach-stats > div:nth-child(1) .rs-num { color: var(--blue); }
 .reach-stats > div:nth-child(2) .rs-num { color: var(--green); }
@@ -412,6 +469,20 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .reach-list li::before { content: ""; position: absolute; left: 0; top: 1em; width: 5px; height: 5px; border-radius: 50%; background: var(--c); }
 .reach-foot { margin-top: 2rem; font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
 
+/* Zone B and C rosters are proof, not reading material: collapsed by default behind a
+   native disclosure so the skim path survives 56 college names. Zone A (local) stays open.
+   The h3 heading sits OUTSIDE the details so heading navigation and accessible names stay
+   clean; the summary holds only the toggle text. */
+.rtier-details > summary { list-style: none; cursor: pointer; width: fit-content; margin: .35rem 0 0; }
+.rtier-details > summary::-webkit-details-marker { display: none; }
+.rtier-details > summary .rtier-toggle {
+  font-family: var(--f-mono); font-size: .76rem; color: var(--blue-ink); font-weight: 700;
+  display: inline-flex; align-items: center; min-height: 32px;
+}
+.rtier-details[open] > summary .rtier-toggle .show-when-closed { display: none; }
+.rtier-details:not([open]) > summary .rtier-toggle .show-when-open { display: none; }
+.rtier-details[open] > summary { margin-bottom: 1rem; }
+
 @media (max-width: 820px) { .reach-strategy { grid-template-columns: 1fr; gap: 1.25rem; } .reach-list { columns: 2; } }
 @media (max-width: 540px) { .reach-list { columns: 1; } }
 
@@ -430,9 +501,10 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 }
 .anchor-label { font-family: var(--f-mono); font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: var(--amber); margin-bottom: 1rem; }
 .anchor-amount { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.8rem, 7vw, 4rem); line-height: .95; letter-spacing: -.04em; color: var(--amber); }
-.anchor-up { display: block; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--paper); opacity: .7; margin-bottom: .15rem; }
+/* The qualifiers are trust-critical for this audience; keep them legible, not fine-print. */
+.anchor-up { display: block; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--paper); opacity: .85; margin-bottom: .15rem; }
 .anchor-who { font-weight: 600; font-size: 1.15rem; margin-top: .75rem; }
-.anchor-tag { font-family: var(--f-mono); font-size: .8rem; color: color-mix(in srgb, var(--paper) 65%, transparent); margin-top: .35rem; }
+.anchor-tag { font-family: var(--f-mono); font-size: .9rem; color: color-mix(in srgb, var(--paper) 85%, transparent); margin-top: .35rem; }
 .fund-list { list-style: none; display: flex; flex-direction: column; }
 .fund-list li { display: grid; grid-template-columns: minmax(0, 220px) 1fr; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
 .fund-list li:first-child { padding-top: 0; }
@@ -488,7 +560,10 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .vtimeline { list-style: none; display: flex; flex-direction: column; }
 .vstop { --c: var(--blue); --c-ink: var(--blue-ink); position: relative; padding: 0 0 1.15rem 1.6rem; }
 .vstop:last-child { padding-bottom: 0; }
-.vstop-blue { --c: var(--blue); --c-ink: var(--blue-ink); } .vstop-red { --c: var(--red); --c-ink: var(--red-ink); } .vstop-amber { --c: var(--amber); --c-ink: var(--ink-soft); } .vstop-green { --c: var(--green); --c-ink: var(--green-ink); }
+/* One hue per column, matching each format card's top border: color encodes which plan
+   a stop belongs to, not a decorative rotation. */
+.fmt-col .vstop { --c: var(--green); --c-ink: var(--green-ink); }
+.fmt-col-mlh .vstop { --c: var(--blue); --c-ink: var(--blue-ink); }
 .vstop::before { content: ""; position: absolute; left: 5px; top: 7px; bottom: -7px; width: 2px; background: var(--line); }
 .vstop:last-child::before { display: none; }
 .vstop::after { content: ""; position: absolute; left: 0; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--card); }
@@ -498,15 +573,13 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 
 .mlh-add { margin-top: 2.5rem; }
 .mlh-benefits { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem 1.75rem; }
+/* Single neutral bullet: the accent colors encode meaning elsewhere (tiers, levels),
+   so a decorative four-color cycle here would dilute that grammar. */
 .mlh-benefits li { --mb-c: var(--muted); display: flex; flex-direction: column; gap: .3rem; padding-left: 1.1rem; position: relative; }
 .mlh-benefits li::before { content: ""; position: absolute; left: 0; top: .5rem; width: 7px; height: 7px; border-radius: 50%; background: var(--mb-c); }
-.mlh-benefits li:nth-child(4n+1) { --mb-c: var(--blue); }
-.mlh-benefits li:nth-child(4n+2) { --mb-c: var(--red); }
-.mlh-benefits li:nth-child(4n+3) { --mb-c: var(--amber); }
-.mlh-benefits li:nth-child(4n+4) { --mb-c: var(--green); }
 .mb-k { font-family: var(--f-display); font-weight: 700; font-size: 1.08rem; letter-spacing: -.01em; }
 .mb-v { font-size: .92rem; line-height: 1.4; color: var(--ink-soft); }
-.mlh-status { margin-top: 1.75rem; font-family: var(--f-mono); font-size: .82rem; color: var(--muted); }
+.mlh-status { margin-top: 1.75rem; font-family: var(--f-mono); font-size: .9rem; color: var(--ink-soft); }
 
 @media (max-width: 800px) {
   .fmt-grid { grid-template-columns: 1fr; }
@@ -546,20 +619,75 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .ask-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2.5rem auto; }
 .ask-steps li { display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid color-mix(in srgb, var(--paper) 22%, transparent); padding-top: 1.1rem; }
 .ask-step-no { font-family: var(--f-mono); font-weight: 700; font-size: 1rem; color: var(--ink); background: var(--amber); width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; }
-.ask-step-text { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; line-height: 1.2; letter-spacing: -.01em; }
+.ask-step-text { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -.01em; }
 .ask-cta { border-top: 1px solid color-mix(in srgb, var(--paper) 22%, transparent); padding-top: 2.25rem; }
 .ask-cta-line { font-size: 1.15rem; color: color-mix(in srgb, var(--paper) 82%, transparent); margin-bottom: 1.5rem; max-width: 50ch; }
+/* The CTA is a copy device, not a bare mailto: clicking copies the address and the pill
+   morphs to show it (mailto handlers fail silently on machines with no mail client).
+   Both faces share one grid cell so the pill never jumps size. */
 .btn-mail {
-  display: inline-flex; align-items: center; gap: .6rem; text-decoration: none;
+  display: inline-grid; text-decoration: none;
   background: var(--amber); color: var(--ink); font-family: var(--f-display); font-weight: 700;
   font-size: 1.2rem; padding: .9rem 1.6rem; border-radius: 999px;
   transition: transform .2s ease, background .2s ease;
 }
 .btn-mail:hover { transform: translateY(-2px); background: #ffbf2e; }
-.btn-mail span { transition: transform .2s ease; }
-.btn-mail:hover span { transform: translateX(4px); }
-.ask-contact { font-family: var(--f-mono); font-size: .85rem; color: color-mix(in srgb, var(--paper) 60%, transparent); margin-top: 1.25rem; }
+.btn-mail-face {
+  grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: center;
+  gap: .6rem; white-space: nowrap;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.btn-mail-start span { transition: transform .2s ease; }
+.btn-mail:not(.is-copied):hover .btn-mail-start span { transform: translateX(4px); }
+.btn-mail-done {
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  font-family: var(--f-mono); font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em;
+}
+.btn-mail-check {
+  display: grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: 50%;
+  background: var(--ink); color: var(--amber); font-size: .8rem; flex-shrink: 0;
+}
+.btn-mail.is-copied .btn-mail-start { opacity: 0; transform: translateY(-10px); }
+.btn-mail.is-copied .btn-mail-done { opacity: 1; transform: none; }
+/* The reveal: after the copy, the address becomes the biggest thing in view (amber on
+   ink is the sanctioned spotlight). Grid-rows 0fr -> 1fr animates the expansion without
+   measuring heights; reduced motion collapses it to an instant swap. */
+.ask-reveal {
+  display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(8px);
+  transition: grid-template-rows .5s var(--ease), opacity .4s ease, transform .5s var(--ease), margin-top .5s var(--ease);
+}
+.ask-reveal-inner { overflow: hidden; min-width: 0; }
+.ask-reveal.is-open { grid-template-rows: 1fr; opacity: 1; transform: none; margin-top: 1.5rem; }
+.ask-reveal-kicker {
+  font-family: var(--f-mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em;
+  color: color-mix(in srgb, var(--paper) 65%, transparent); margin-bottom: .4rem;
+}
+.ask-reveal-email {
+  font-family: var(--f-display); font-weight: 700; font-optical-sizing: auto;
+  font-size: clamp(1.3rem, 3.4vw, 2.2rem); letter-spacing: -.02em; line-height: 1.1;
+  color: var(--amber); overflow-wrap: anywhere;
+  -webkit-user-select: all; user-select: all;
+  margin-bottom: .6rem;
+}
+.ask-reveal-note { font-size: .98rem; color: color-mix(in srgb, var(--paper) 78%, transparent); max-width: 52ch; }
+.ask-reveal-applink {
+  color: color-mix(in srgb, var(--paper) 85%, transparent);
+  text-decoration: underline; text-underline-offset: 3px; white-space: nowrap;
+}
+.ask-reveal-applink:hover { color: var(--paper); }
+.ask-mail-app { margin-top: .85rem; }
+/* Once the reveal is open, its note carries the mail-app link; hide the standalone one. */
+.btn-mail.is-copied ~ .ask-mail-app { display: none; }
+.ask-mail-app a {
+  font-family: var(--f-mono); font-size: .85rem;
+  color: color-mix(in srgb, var(--paper) 75%, transparent);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.ask-mail-app a:hover { color: var(--paper); }
+.ask-contact { font-family: var(--f-mono); font-size: .85rem; color: color-mix(in srgb, var(--paper) 75%, transparent); margin-top: 1.25rem; }
 .ask-contact .sep { opacity: .5; }
+.ask-email { -webkit-user-select: all; user-select: all; }
+.ask-alt { font-size: .95rem; color: color-mix(in srgb, var(--paper) 70%, transparent); margin-top: 1rem; max-width: 50ch; }
 @media (max-width: 760px) { .ask-steps { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -568,7 +696,7 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .footer { max-width: var(--maxw); margin: 0 auto; padding: 3rem var(--pad) 4rem; border-top: 1px solid var(--line); }
 .footer-brand { display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1rem; }
 .footer-note { font-weight: 600; margin-bottom: .4rem; }
-.footer-fine { font-family: var(--f-mono); font-size: .78rem; color: var(--muted); max-width: 60ch; }
+.footer-fine { font-family: var(--f-mono); font-size: .85rem; color: var(--ink-soft); max-width: 60ch; margin-bottom: .75rem; }
 
 /* ============================================================
    MOTION
@@ -585,9 +713,12 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
     .hack-lead, .hack-subhead, .qa-grid, .fmt-grid, .mlh-benefits, .mlh-status,
     .why-body, .why-cards, .gdg-cred, .gdg-advisor, .gdg-intro-logo, .gdg-grid, .gr-list, .gdg-io, .facts, .levels, .levels-status, .mesa-track,
     .podium, .track-cards, .track-matrix, .dial, .tier-panels, .scope-foot,
-    .reach-stats, .reach-strategy, .roster,
+    .reach-stats, .reach-strategy, .roster, .colleges-marks img,
     .anchor-card, .fund-list, .fund-foot, .ask-steps, .ask-cta
   ) { opacity: 0; }
+  /* Opacity only, on purpose: content stays in the accessibility tree for screen
+     readers; a focusin hook in main.ts reveals a target the moment focus enters it,
+     so keyboard users never land on an invisible control. */
 }
 
 /* Hero intro is GSAP-driven (src/main.ts). Hidden pre-paint on screen + motion so
@@ -599,7 +730,9 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  /* iteration-count 1 stops infinite keyframes (e.g. the scroll-cue nudge) from
+     restarting every frame at .001ms. */
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 
 /* ============================================================
@@ -735,7 +868,8 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .subhead-mlh { height: 1.3rem; width: auto; vertical-align: -.22rem; }
 
 .footer-partners { display: flex; flex-wrap: wrap; gap: 1.75rem 3rem; align-items: flex-end; margin: 1.75rem 0; padding: 1.75rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.fp { display: flex; flex-direction: column; gap: .6rem; }
+.fp { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; }
+.fp img { align-self: flex-start; }
 .fp-label { font-family: var(--f-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
 .fp .brand-logo { height: 28px; }
 .fp .gdg-logo { height: 26px; }
@@ -811,3 +945,27 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   right: clamp(-5rem, -3vw, -1rem); top: 40%; width: min(480px, 50vw); aspect-ratio: 1;
   background: url("/assets/logos/ccc.png") no-repeat center / contain; opacity: .03; }
 .reach > * { position: relative; z-index: 1; }
+
+/* ============================================================
+   PRINT — advisors print and forward this page
+   ============================================================ */
+@media print {
+  .scroll-progress, .skip-link, .scroll-cue, .dial, .matrix-hint, .nav-menu { display: none !important; }
+  .nav { position: static; backdrop-filter: none; background: none; border-bottom: 1px solid var(--line); }
+  .nav-links a:not(.nav-cta) { display: inline; }
+  .nav-cta { background: none; color: var(--ink) !important; padding: 0; }
+  /* JS hides two of the three tier panels behind the dial; print shows all three,
+     each labeled by its (screen-hidden) tier tag. */
+  .tier-panel[hidden] { display: block; }
+  .tier-tag {
+    display: block; font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--muted); margin-bottom: 1rem;
+  }
+  .tier-tag span { color: var(--ink-soft); font-weight: 700; }
+  /* Collapsed rosters print in full: ::details-content for engines that support it,
+     plus a beforeprint hook in main.ts that opens the roster details. */
+  .rtier-details:not([open])::details-content { content-visibility: visible; }
+  .rtier-details > summary { display: none; }
+  .section, .tier-panel, .fmt-col, .pod, .why-cards li { break-inside: avoid; }
+  .hero { min-height: 0; }
+}

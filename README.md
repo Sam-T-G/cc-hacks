@@ -23,9 +23,10 @@ GitHub Action (not branch-root serving).
 
 ```bash
 npm install
-npm run dev       # http://localhost:5173/cc-hacks/
-npm run build     # outputs dist/ (gitignored)
-npm run preview   # serve the production build
+npm run dev        # http://localhost:5173/cc-hacks/
+npm run typecheck  # tsc --noEmit (strict)
+npm run build      # typechecks, then outputs dist/ (gitignored)
+npm run preview    # serve the production build
 ```
 
 ## Deploy
@@ -39,9 +40,10 @@ the build.
 - Attendance figures shown are **targets**, not commitments.
 - The GDG @ RCC funding supplement (up to $10,000) is **pending ASRCC approval**.
 - Motion respects `prefers-reduced-motion`, and the page renders fully with no JS, reduced motion, or
-  in print (reveal targets are hidden only on screen + motion).
+  in print (reveal targets are hidden only on screen + motion; an `@media print` block unhides all
+  scope-tier panels and expands the collapsed reach rosters).
 - The official GDG @ RCC lockup (`public/assets/logos/gdg-rcc.svg`, the GDG On Campus horizontal
   mark) is wired into the nav, the "who runs it" fact, and the footer via the `.gdg-logo` class.
-- Detailed internal planning lives in the private `gdg-cc-hackathon` repo. This repo is public on
-  purpose: it's the outward-facing site and proposal. Also serves as the foundation for the event
-  website MLH Member Events require.
+- This repo is public on purpose: it's the outward-facing site and proposal, and it serves as the
+  foundation for the event website MLH Member Events require. Event planning happens in a separate
+  workspace; this repo holds only what the site needs.
