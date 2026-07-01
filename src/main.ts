@@ -156,6 +156,39 @@ if (motion) {
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
+/* ---------- I/O panel lockup: horizontal when the line has room, else vertical ----------
+   Keyed to the header's real free width, not a viewport breakpoint, so the mark only stacks
+   when the horizontal lockup genuinely would not fit beside the label. Always on. */
+const ioHead = document.querySelector<HTMLElement>('.gdg-io-head');
+if (ioHead) {
+  const label = ioHead.querySelector<HTMLElement>('.gdg-io-label');
+  const place = ioHead.querySelector<HTMLElement>('.gdg-io-place');
+  if (label && place) {
+    const HORIZ_W = 40 * (560 / 70); // horizontal lockup width at its 40px display height
+    const GAP = 24; // head column-gap when horizontal (1.5rem)
+    const MARGIN = 14; // stay off the exact boundary
+    /* Intrinsic (unwrapped) width of the label block, measured with a momentary nowrap so the
+       real layout can still wrap the label when it's stacked. */
+    const metaWidth = (): number => {
+      const a = label.style.whiteSpace;
+      const b = place.style.whiteSpace;
+      label.style.whiteSpace = place.style.whiteSpace = 'nowrap';
+      const w = Math.max(label.scrollWidth, place.scrollWidth);
+      label.style.whiteSpace = a;
+      place.style.whiteSpace = b;
+      return w;
+    };
+    const decide = () => {
+      const fits = HORIZ_W + GAP + metaWidth() + MARGIN <= ioHead.clientWidth;
+      ioHead.classList.toggle('io-horiz', fits);
+    };
+    decide();
+    window.addEventListener('resize', decide, { passive: true });
+    window.addEventListener('load', decide);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(decide);
+  }
+}
+
 /* ---------- Scroll progress bar (Google-color, always on) ---------- */
 const progress = document.querySelector<HTMLElement>('.scroll-progress');
 if (progress) {

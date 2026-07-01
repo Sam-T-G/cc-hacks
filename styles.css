@@ -669,21 +669,22 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   background: radial-gradient(circle, color-mix(in srgb, var(--blue) 26%, transparent), transparent 70%);
 }
 .gdg-io > * { position: relative; z-index: 1; }
+/* The logo on the left, the panel label beside it. Which lockup shows is decided in JS from
+   the header's actual free width (see main.ts): the horizontal lockup whenever it fits the
+   line, otherwise the compact vertical mark. Base state below (and no-JS) is the vertical
+   mark, which never overflows; `.io-horiz` is the wide state. */
 .gdg-io-head {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 1rem 1.5rem; margin-bottom: 1.5rem;
+  display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-start;
+  gap: .5rem .75rem; margin-bottom: 1.5rem;
 }
 .gdg-io-brand { flex-shrink: 0; }
-/* The vertical lockup sits on the left in every viewport. Wide: the panel label is
-   right-justified opposite it. Condensed: the label sits left-aligned beside it, on the
-   same line. */
-.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; text-align: right; }
-.gdg-io-logo-stack { display: block; height: 76px; width: auto; }
-@media (max-width: 640px) {
-  .gdg-io-head { flex-wrap: nowrap; justify-content: flex-start; gap: .5rem .75rem; }
-  .gdg-io-logo-stack { height: 58px; }
-  .gdg-io-meta { align-items: flex-start; text-align: left; }
-}
+.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-start; text-align: left; }
+.gdg-io-logo-stack { display: block; height: 58px; width: auto; }
+.gdg-io-logo-horiz { display: none; height: 40px; width: auto; }
+.gdg-io-head.io-horiz { justify-content: space-between; gap: 1rem 1.5rem; }
+.gdg-io-head.io-horiz .gdg-io-logo-stack { display: none; }
+.gdg-io-head.io-horiz .gdg-io-logo-horiz { display: block; }
+.gdg-io-head.io-horiz .gdg-io-meta { align-items: flex-end; text-align: right; }
 .gdg-io-label {
   font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em;
   color: var(--amber);
@@ -692,7 +693,6 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   font-family: var(--f-mono); font-size: .78rem;
   color: color-mix(in srgb, var(--paper) 60%, transparent);
 }
-.gdg-io-place .sep { color: color-mix(in srgb, var(--paper) 32%, transparent); }
 .gdg-io-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .gdg-io .gdg-photo {
   display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
