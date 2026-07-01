@@ -639,12 +639,14 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .gdg-advisor { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); margin: 0 0 1.75rem; }
 
 /* GDG @ RCC mark beside the intro lede: official branding to establish validity */
-.gdg-intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2.5rem 3rem; align-items: center; }
+/* Lede left, the horizontal GDG lockup right. Sized by width (the lockup is wide and short)
+   with clamp so it scales with the viewport and never crowds the lede or overflows. */
+.gdg-intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(1.25rem, 4vw, 3rem); align-items: center; }
 .gdg-intro .section-lede { margin-bottom: 0; }
-.gdg-intro-logo { height: 140px; width: auto; justify-self: end; }
+.gdg-intro-logo { width: clamp(210px, 26vw, 340px); max-width: 100%; height: auto; justify-self: end; }
 @media (max-width: 760px) {
-  .gdg-intro { grid-template-columns: 1fr; gap: 1.5rem; justify-items: start; }
-  .gdg-intro-logo { height: 96px; justify-self: start; }
+  .gdg-intro { grid-template-columns: 1fr; justify-items: start; }
+  .gdg-intro-logo { justify-self: start; }
 }
 
 /* GDG track record: hard proof the same students have run real events */
@@ -669,22 +671,21 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
   background: radial-gradient(circle, color-mix(in srgb, var(--blue) 26%, transparent), transparent 70%);
 }
 .gdg-io > * { position: relative; z-index: 1; }
-/* The logo on the left, the panel label beside it. Which lockup shows is decided in JS from
-   the header's actual free width (see main.ts): the horizontal lockup whenever it fits the
-   line, otherwise the compact vertical mark. Base state below (and no-JS) is the vertical
-   mark, which never overflows; `.io-horiz` is the wide state. */
+/* Logo on the left, label right-justified opposite it, in every mode. Which lockup shows is
+   decided in JS from the header's actual free width (see main.ts): the horizontal lockup
+   whenever it fits the line, otherwise the compact vertical mark. The `.io-horiz` class only
+   swaps the mark; the layout stays the same. No-JS shows the vertical mark, which never
+   overflows. */
 .gdg-io-head {
-  display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-start;
-  gap: .5rem .75rem; margin-bottom: 1.5rem;
+  display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between;
+  gap: 1rem 1.5rem; margin-bottom: 1.5rem;
 }
 .gdg-io-brand { flex-shrink: 0; }
-.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-start; text-align: left; }
+.gdg-io-meta { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; text-align: right; }
 .gdg-io-logo-stack { display: block; height: 58px; width: auto; }
 .gdg-io-logo-horiz { display: none; height: 40px; width: auto; }
-.gdg-io-head.io-horiz { justify-content: space-between; gap: 1rem 1.5rem; }
 .gdg-io-head.io-horiz .gdg-io-logo-stack { display: none; }
 .gdg-io-head.io-horiz .gdg-io-logo-horiz { display: block; }
-.gdg-io-head.io-horiz .gdg-io-meta { align-items: flex-end; text-align: right; }
 .gdg-io-label {
   font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .07em;
   color: var(--amber);
