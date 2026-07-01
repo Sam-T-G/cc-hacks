@@ -639,13 +639,14 @@ html:not(.js) .tier-tag span { color: var(--ink-soft); font-weight: 700; }
 .gdg-advisor { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); margin: 0 0 1.75rem; }
 
 /* GDG @ RCC mark beside the intro lede: official branding to establish validity */
-/* Lede left, the horizontal GDG lockup right. Sized by width (the lockup is wide and short)
-   with clamp so it scales with the viewport and never crowds the lede or overflows. */
-.gdg-intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(1.25rem, 4vw, 3rem); align-items: center; }
+/* Shares the two-column track of `.gdg-grid` below so the lockup sits in the same column as
+   the pillars and lines up with them. The lockup is wide and short, so it is sized by width
+   (clamp, scales with the viewport) and centered in its column. */
+.gdg-intro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem 3.5rem; align-items: center; }
 .gdg-intro .section-lede { margin-bottom: 0; }
-.gdg-intro-logo { width: clamp(210px, 26vw, 340px); max-width: 100%; height: auto; justify-self: end; }
+.gdg-intro-logo { width: clamp(200px, 22vw, 300px); max-width: 100%; height: auto; justify-self: start; }
 @media (max-width: 760px) {
-  .gdg-intro { grid-template-columns: 1fr; justify-items: start; }
+  .gdg-intro { grid-template-columns: 1fr; gap: 1.75rem; justify-items: start; }
   .gdg-intro-logo { justify-self: start; }
 }
 
